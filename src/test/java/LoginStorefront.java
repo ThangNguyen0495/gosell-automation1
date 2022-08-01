@@ -6,7 +6,6 @@ public class LoginStorefront extends BaseTest {
     
     @Test
     public void TC06_SF_LoginWithValidPhoneNumberAccount() {
-        LoginPage loginPage = new LoginPage(driver);
         new LoginPage(driver).navigate()
         .performLogin("0856256079", "12345678x@X");
         org.testng.Assert.assertTrue(false, "OMG So bad!");

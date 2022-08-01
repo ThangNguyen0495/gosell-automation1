@@ -27,10 +27,10 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(css = "#username")
+    @FindBy(css = "input[name='username']")
     WebElement USERNAME;
 
-    @FindBy (css = "#password")
+    @FindBy (css = "input[name='password']")
     WebElement PASSWORD;
 
     @FindBy (css = "button.gs-button")
@@ -49,11 +49,19 @@ public class LoginPage {
     WebElement FACEBOOK_USERNAME;	
 
     @FindBy (css = "#pass")
-    WebElement FACEBOOK_PASSWORD;    
+    WebElement FACEBOOK_PASSWORD;
+
+    @FindBy (css = "span.login-widget__tab:nth-child(2)")
+    WebElement STAFF_TAB;
     
     public LoginPage navigate() {
         driver.get(DOMAIN + LOGIN_PATH);
         wait.until(ExpectedConditions.titleIs(LOGIN_PAGE_TITLE));
+        return this;
+    }
+
+    public LoginPage switchToStaffTab() {
+        STAFF_TAB.click();
         return this;
     }
 
