@@ -53,6 +53,7 @@ public class ReportListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult iTestResult) {
     	Logger.error("[FAILED] " + getTestName(iTestResult) + " has failed.");
+    	Logger.debug("Caused by Exception: " + iTestResult.getThrowable());
 
 //        ExtentTestManager.addScreenShot(Status.FAIL, getTestName(iTestResult));
         ExtentTestManager.getTest().log(Status.FAIL, iTestResult.getThrowable());
