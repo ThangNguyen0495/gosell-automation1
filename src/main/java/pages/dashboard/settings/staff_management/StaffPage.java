@@ -1,9 +1,9 @@
 package pages.dashboard.settings.staff_management;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.List;
 
 import static utilities.links.Links.*;
 
@@ -34,22 +34,28 @@ public class StaffPage extends StaffVerify {
         return this;
     }
 
-    public StaffPage selectStaffPermission() {
-        for (WebElement permission : STAFF_PERMISSIONS) {
-//            wait.until(ExpectedConditions.elementToBeClickable(permission)).click();
-            permission.click();
+    public StaffPage selectStaffPermission(List<Integer> roleList) {
+        for (Integer role : roleList) {
+            if (role < STAFF_PERMISSIONS.size()) {
+                wait.until(ExpectedConditions.elementToBeClickable(STAFF_PERMISSIONS.get(role))).click();
+            }
         }
         return this;
     }
 
-    public StaffPage selectBranch() {
-        for (WebElement branch : STAFF_BRANCH) {
-            wait.until(ExpectedConditions.elementToBeClickable(branch)).click();
+    public StaffPage selectBranch(List<Integer> branchList) {
+        for (Integer branch : branchList) {
+            wait.until(ExpectedConditions.elementToBeClickable(STAFF_BRANCH.get(branch))).click();
         }
         return this;
     }
 
-    public void clickOnTheDoneBtn() {
+    public StaffPage clickDoneBtn() {
         wait.until(ExpectedConditions.elementToBeClickable(DONE_BTN)).click();
+        return this;
+    }
+
+    public void logoutSellerAccount() {
+        wait.until(ExpectedConditions.elementToBeClickable(LOGOUT_BTN)).click();
     }
 }

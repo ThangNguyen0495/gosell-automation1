@@ -17,7 +17,7 @@ public class SignupDashboard extends BaseTest{
 	WebDriver driver1;
 	
     @BeforeMethod
-    public void setup() {
+    public void setup() throws InterruptedException {
     	super.setup();
     	signupPage = new SignupPage(driver);
     }		

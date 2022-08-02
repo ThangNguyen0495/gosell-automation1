@@ -1,0 +1,163 @@
+package utilities.role_matrix;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class RoleMatrix {
+    public Map<Integer, List<Integer>> staffRoleEncode() {
+        Map<Integer, List<Integer>> staffRoleEncode = new HashMap<>();
+        staffRoleEncode.put(0, List.of(1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(1, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(2, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(3, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0));
+        staffRoleEncode.put(4, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(5, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1));
+        staffRoleEncode.put(6, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(7, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(8, List.of(1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(9, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(10, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(11, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(12, List.of(1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(13, List.of(1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        staffRoleEncode.put(14, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        return staffRoleEncode;
+    }
+
+    public Map<Integer, String> staffRoleText() {
+        Map<Integer, String> staffRoleText = new HashMap<>();
+        staffRoleText.put(0, "Products");
+        staffRoleText.put(1, "Marketing");
+        staffRoleText.put(2, "Orders");
+        staffRoleText.put(3, "Sales chanel");
+        staffRoleText.put(4, "Analytics");
+        staffRoleText.put(5, "Settings");
+        staffRoleText.put(6, "Discount");
+        staffRoleText.put(7, "Customers");
+        staffRoleText.put(8, "GoChat");
+        staffRoleText.put(9, "Services");
+        staffRoleText.put(10, "Call center");
+        staffRoleText.put(11, "Reservations");
+        staffRoleText.put(12, "Supplier management");
+        staffRoleText.put(13, "Purchase order");
+        staffRoleText.put(14, "Cashbook");
+        return staffRoleText;
+    }
+
+    public Map<Integer, String> pageList() {
+        Map<Integer, String> functionList = new HashMap<>();
+        functionList.put(0, "Admin Staging - Home");
+        functionList.put(1, "Admin Staging - Conservation");
+        functionList.put(2, "Admin Staging - Configuration");
+        functionList.put(3, "Admin Staging - Automation");
+        functionList.put(4, "Admin Staging - Broadcast");
+        functionList.put(5, "Admin Staging - GoSocial Zalo");
+        functionList.put(6, "Admin Staging - Products");
+        functionList.put(7, "Admin Staging - Inventory");
+        functionList.put(8, "Admin Staging - Transfer");
+        functionList.put(9, "Admin Staging - Product collections");
+        functionList.put(10, "Admin Staging - Reviews");
+        functionList.put(11, "Admin Staging - Supplier");
+        functionList.put(12, "Admin Staging - Purchase Order");
+        functionList.put(13, "Admin Staging - Services");
+        functionList.put(14, "Admin Staging - Product collections");
+        functionList.put(15, "Admin Staging - Orders");
+        functionList.put(16, "Admin Staging - Return Orders");
+        functionList.put(17, "Admin Staging - Create Quotation");
+        functionList.put(18, "Admin Staging - Order 1 | POS - Instore purchase");
+        functionList.put(19, "Admin Staging - Reservations");
+        functionList.put(20, "Admin Staging - Discounts");
+        functionList.put(21, "Admin Staging - Flash sale management");
+        functionList.put(22, "Admin Staging - Customers");
+        functionList.put(23, "Admin Staging - Customer segment");
+        functionList.put(24, "Admin Staging - Call center");
+        functionList.put(25, "Admin Staging - Cashbook");
+        functionList.put(26, "Admin Staging - Orders Analytics");
+        functionList.put(27, "Admin Staging - Reservations Analytics");
+        functionList.put(28, "Admin Staging - Landing page");
+        functionList.put(29, "Admin Staging - Buy Link");
+        functionList.put(30, "Admin Staging - Email Campaigns");
+        functionList.put(31, "Admin Staging - Notification");
+        functionList.put(32, "Admin Staging - Loyalty Program");
+        functionList.put(33, "Admin Staging - Google Analytics");
+        functionList.put(34, "Admin Staging - Google Shopping");
+        functionList.put(35, "Admin Staging - Google Tag Manager");
+        functionList.put(36, "Admin Staging - Facebook Pixel");
+        functionList.put(37, "Admin Staging - Loyalty point program");
+        functionList.put(38, "Admin Staging - Affiliate");
+        functionList.put(39, "Admin Staging - Theme management");
+        functionList.put(40, "Admin Staging - Blog management");
+        functionList.put(41, "Admin Staging - Pages");
+        functionList.put(42, "Admin Staging - Menu");
+        functionList.put(43, "Admin Staging - Domains");
+        functionList.put(44, "Admin Staging - Preferences");
+        functionList.put(45, "Admin Staging - Shopee");
+        functionList.put(46, "Admin Staging - Shopee product management");
+        functionList.put(47, "Admin Staging - Link Products");
+        functionList.put(48, "Admin Staging - Shopee");
+        functionList.put(49, "Admin Staging - Settings");
+        functionList.put(50, "Admin Staging - Lazada");
+        functionList.put(51, "Admin Staging - title.[/channel/gomua/account]");
+        functionList.put(52, "Admin Staging - Settings");
+        return functionList;
+    }
+
+    public Map<Integer, String> pagePath() {
+        Map<Integer, String> functionPath = new HashMap<>();
+        functionPath.put(0, "/home");
+        functionPath.put(1, "/gosocial/facebook/conversations");
+        functionPath.put(2, "/gosocial/facebook/configuration");
+        functionPath.put(3, "/gosocial/facebook/automation");
+        functionPath.put(4, "/gosocial/facebook/broadcast");
+        functionPath.put(5, "/gosocial/zalo/intro");
+        functionPath.put(6, "/product/list");
+        functionPath.put(7, "/inventory/list");
+        functionPath.put(8, "/product/transfer/list");
+        functionPath.put(9, "/collection/list");
+        functionPath.put(10, "/review_product/list");
+        functionPath.put(11, "/supplier/list");
+        functionPath.put(12, "/product/purchase-order/list");
+        functionPath.put(13, "/service/list");
+        functionPath.put(14, "/collection_service/list");
+        functionPath.put(15, "/order/list");
+        functionPath.put(16, "/order/return-order/list");
+        functionPath.put(17, "/order/instore-quotation");
+        functionPath.put(18, "/order/instore-purchase");
+        functionPath.put(19, "/reservation/list");
+        functionPath.put(20, "/discounts/list");
+        functionPath.put(21, "/flash-sale/list");
+        functionPath.put(22, "/all-customers/list");
+        functionPath.put(23, "/segments/list");
+        functionPath.put(24, "/setting/call-center");
+        functionPath.put(25, "/cashbook/management");
+        functionPath.put(26, "/analytics/order");
+        functionPath.put(27, "/analytics/reservation");
+        functionPath.put(28, "/marketing/landing-page/list");
+        functionPath.put(29, "/marketing/buy-link/list");
+        functionPath.put(30, "/marketing/email/list");
+        functionPath.put(31, "/marketing/notification");
+        functionPath.put(32, "/marketing/loyalty/list");
+        functionPath.put(33, "/marketing/google-analytics");
+        functionPath.put(34, "/marketing/google-shopping");
+        functionPath.put(35, "/marketing/google-tag-manager");
+        functionPath.put(36, "/marketing/facebook-pixel");
+        functionPath.put(37, "/marketing/loyalty-point/setting");
+        functionPath.put(38, "/affiliate");
+        functionPath.put(39, "/theme/management");
+        functionPath.put(40, "/channel/storefront/blog/article/list");
+        functionPath.put(41, "/channel/storefront/custom-page");
+        functionPath.put(42, "/channel/storefront/menu");
+        functionPath.put(43, "/channel/storefront/domain");
+        functionPath.put(44, "/channel/storefront/preference");
+        functionPath.put(45, "/channel/shopee/account/information");
+        functionPath.put(46, "/channel/shopee/product/list");
+        functionPath.put(47, "/channel/shopee/link-products");
+        functionPath.put(48, "/channel/shopee/account/management");
+        functionPath.put(49, "/channel/shopee/settings");
+        functionPath.put(50, "/channel/lazada/account");
+        functionPath.put(51, "/channel/gomua/account");
+        functionPath.put(52, "/setting");
+        return functionPath;
+    }
+}

@@ -35,4 +35,7 @@ public class StaffElement {
 
     @FindBy (css = "div.staff-modal__footer > button.gs-button__green")
     WebElement DONE_BTN;
+
+    @FindBy (css = "div.header-right__ele-right > a[href='/logout']")
+    WebElement LOGOUT_BTN;
 }

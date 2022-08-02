@@ -11,7 +11,7 @@ public class BaseTest {
     DataGenerator generate;
 
     @BeforeMethod
-    public void setup() {
+    public void setup() throws InterruptedException {
         driver = new InitWebdriver().getDriver("chrome", "false");
         generate = new DataGenerator();
     }
@@ -19,7 +19,7 @@ public class BaseTest {
     @AfterMethod
     public void tearDown() {
         if (driver != null) {
-            driver.quit();
+//            driver.quit();
         }
     }
 }
