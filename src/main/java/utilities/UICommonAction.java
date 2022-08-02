@@ -26,7 +26,7 @@ public class UICommonAction {
 		try {
 			wait.until(ExpectedConditions.elementToBeClickable(element)).click();
 		} catch (StaleElementReferenceException ex) {
-			System.out.println("Catch StaleElementReferenceException in clickElement");
+			logger.debug("StaleElementReferenceException caught in clickElement");
 			wait.until(ExpectedConditions.elementToBeClickable(element)).click();
 		}
 	}
@@ -36,7 +36,7 @@ public class UICommonAction {
 			wait.until(ExpectedConditions.elementToBeClickable(element)).clear();
 			element.sendKeys(text);
 		} catch (StaleElementReferenceException ex) {
-			System.out.println("Catch StaleElementReferenceException in clickElement");
+			logger.debug("StaleElementReferenceException caught in inputText");
 			wait.until(ExpectedConditions.elementToBeClickable(element)).clear();
 			element.sendKeys(text);
 		}
@@ -47,7 +47,7 @@ public class UICommonAction {
 		try {
 			text = wait.until(ExpectedConditions.visibilityOf(element)).getText();
 		} catch (StaleElementReferenceException ex) {
-			System.out.println("Catch StaleElementReferenceException in getText");
+			logger.debug("Catch StaleElementReferenceException caught in getText");
 			text = wait.until(ExpectedConditions.visibilityOf(element)).getText();
 		}
 		logger.info("Text get: " + text);
