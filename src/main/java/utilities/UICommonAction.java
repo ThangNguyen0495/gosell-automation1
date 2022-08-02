@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.time.Duration;
 
 public class UICommonAction {
@@ -53,5 +54,24 @@ public class UICommonAction {
 		logger.info("Text get: " + text);
 		return text;
 	}	
+
+	public void uploadMultipleFile(WebElement element,String folder, String...fileNames){
+		String filePath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator +"uploadfile"+ File.separator + folder;
+		String fullName = "";
+		for (String fileName: fileNames) {
+			fullName = fullName + filePath + fileName + "\n";
+		}
+		inputText(element,fullName);
+	}
+	public void checkTheCheckBoxOrRadio (WebElement element){
+		if (!element.isSelected()){
+			clickElement(element);
+		}
+	}
+	public void uncheckTheCheckboxOrRadio (WebElement element){
+		if (element.isSelected()){
+			clickElement(element);
+		}
+	}
 
 }
