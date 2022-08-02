@@ -50,7 +50,7 @@ public class UICommonAction {
 			System.out.println("Catch StaleElementReferenceException in getText");
 			text = wait.until(ExpectedConditions.visibilityOf(element)).getText();
 		}
-		System.out.println("Text get" + text);
+		logger.info("Text get: " + text);
 		return text;
 	}	
 
