@@ -25,26 +25,12 @@ public class ExtentTestManager {
         return test;
     }
 
-//    public WebDriver getDriver() {
-//        WebDriver driver = BaseTest.getDriver();
-//        return driver;
-//    }
-//
-//    public static void addScreenShot(String message) {
-//        String base64Image = "data:image/png;base64,"
-//                + ((TakesScreenshot) BaseSetup.getDriver()).getScreenshotAs(OutputType.BASE64);
-//        getTest().log(Status.INFO, message,
-//                getTest().addScreenCaptureFromBase64String(base64Image).getModel().getMedia().get(0));
-//    }
-//
-//    public static void addScreenShot(Status status, String message) {
-//
-//        String base64Image = "data:image/png;base64,"
-//                + ((TakesScreenshot) BaseSetup.getDriver()).getScreenshotAs(OutputType.BASE64);
-//        getTest().log(status, message,
-//                getTest().addScreenCaptureFromBase64String(base64Image).getModel().getMedia().get(0));
-//    }
-//
+    public static void addScreenShot(Status status, String message, WebDriver driver) {
+        String base64Image = "data:image/png;base64,"
+                + ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+        getTest().log(status, message,
+                getTest().addScreenCaptureFromBase64String(base64Image).getModel().getMedia().get(0));
+    }
 
 
 }
