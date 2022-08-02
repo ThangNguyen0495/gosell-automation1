@@ -1,5 +1,7 @@
 package pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,12 +10,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
+import pages.dashboard.SignupPage;
 
 import java.time.Duration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Mailnesia {
+	
+	final static Logger logger = LogManager.getLogger(Mailnesia.class);
 	
     WebDriver driver;
     WebDriverWait wait;
@@ -35,12 +40,14 @@ public class Mailnesia {
     }
 
     public String getVerificationCode() {
+    	String code = null;
 		Pattern p = Pattern.compile("\\d+");
 		Matcher m = p.matcher(EMAIL.getText());
 		if (m.find()) {
-			return m.group();
+			code = m.group();
 		}
-		return null;
+		logger.info("Verification Code retrieved: " + code);
+		return code;
     }    
     
 }
