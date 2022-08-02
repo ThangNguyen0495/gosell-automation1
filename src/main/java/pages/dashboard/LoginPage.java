@@ -1,5 +1,7 @@
 package pages.dashboard;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
+import utilities.UICommonAction;
 
 import static utilities.links.Links.*;
 
@@ -16,14 +19,18 @@ import java.util.List;
 
 public class LoginPage {
 	
+	final static Logger logger = LogManager.getLogger(LoginPage.class);
+	
     WebDriver driver;
     WebDriverWait wait;
+    UICommonAction commonAction;
     
     SoftAssert soft = new SoftAssert();
     
     public LoginPage (WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        commonAction = new UICommonAction(driver);
         PageFactory.initElements(driver, this);
     }
 
@@ -51,6 +58,9 @@ public class LoginPage {
     @FindBy (css = "#pass")
     WebElement FACEBOOK_PASSWORD;
 
+    @FindBy (css = "input[name=\"login\"]")
+    WebElement FACEBOOK_LOGIN_BTN;        
+    
     @FindBy (css = "span.login-widget__tab:nth-child(2)")
     WebElement STAFF_TAB;
     
@@ -61,45 +71,50 @@ public class LoginPage {
     }
 
     public LoginPage switchToStaffTab() {
-        STAFF_TAB.click();
+    	commonAction.clickElement(STAFF_TAB);
+    	logger.info("Switched to Staff Tab.");
         return this;
     }
 
     public LoginPage clickFacebookBtn() {
-        FACEBOOK_BTN.click();
+    	commonAction.clickElement(FACEBOOK_BTN);
+    	logger.info("Clicked on Facebook linktext.");
         return this;
     }
 
-    @FindBy (css = "input[name=\"login\"]")
-    WebElement FACEBOOK_LOGIN_BTN;    
-    
     public LoginPage inputEmailOrPhoneNumber(String username) {
-        wait.until(ExpectedConditions.visibilityOf(USERNAME)).sendKeys(username);
+    	commonAction.inputText(USERNAME, username);
+    	logger.info("Input '" + username + "' into Username field.");
         return this;
     }
 
     public LoginPage inputPassword(String password) {
-        PASSWORD.sendKeys(password);
+    	commonAction.inputText(PASSWORD, password);
+    	logger.info("Input '" + password + "' into Password field.");
         return this;
     }
 
     public LoginPage inputFacebookUsername(String username) {
-        wait.until(ExpectedConditions.visibilityOf(FACEBOOK_USERNAME)).sendKeys(username);
+    	commonAction.inputText(FACEBOOK_USERNAME, username);
+    	logger.info("Input '" + username + "' into Facebook Username field.");
         return this;
     }
 
     public LoginPage inputFacebookPassword(String password) {
-    	FACEBOOK_PASSWORD.sendKeys(password);
+    	commonAction.inputText(FACEBOOK_PASSWORD, password);
+    	logger.info("Input '" + password + "' into Facebook Password field.");
         return this;
     }    
     
     public LoginPage clickLoginBtn() {
-        LOGIN_BTN.click();
+    	commonAction.clickElement(LOGIN_BTN);
+    	logger.info("Clicked on Login button.");
         return this;
     }
 
     public LoginPage clickFacebookLoginBtn() {
-        FACEBOOK_LOGIN_BTN.click();
+    	commonAction.clickElement(FACEBOOK_LOGIN_BTN);
+    	logger.info("Clicked on Facebook Login button.");
         return this;
     }    
     
@@ -131,20 +146,23 @@ public class LoginPage {
     }      
     
     public LoginPage verifyEmailOrPhoneNumberError(String errMessage) {
-        String text = wait.until(ExpectedConditions.visibilityOf(USER_PASSWORD_ERROR.get(0))).getText();
+        String text = commonAction.getText(USER_PASSWORD_ERROR.get(0));
         soft.assertEquals(text, errMessage, "[Login][Email or Phone Number] Message does not match.");
+        logger.info("verifyEmailOrPhoneNumberError completed");
         return this;
     }
 
     public LoginPage verifyPasswordError(String errMessage) {
-        String text = wait.until(ExpectedConditions.visibilityOf(USER_PASSWORD_ERROR.get(1))).getText();
-        soft.assertEquals(text,errMessage, "[Login][Password] Message does not match");
+        String text = commonAction.getText(USER_PASSWORD_ERROR.get(1));
+        soft.assertEquals(text,errMessage, "[Login][Password] Message does not match.");
+        logger.info("verifyPasswordError completed");
         return this;
     }
 
     public LoginPage verifyEmailOrPasswordIncorrectError(String errMessage) {
-        String text = wait.until(ExpectedConditions.visibilityOf(INVALID_USER_ERROR)).getText();
-        soft.assertEquals(text,errMessage, "[Login][Invalid Email/Password] Message does not match");
+        String text = commonAction.getText(INVALID_USER_ERROR);
+        soft.assertEquals(text,errMessage, "[Login][Invalid Email/Password] Message does not match.");
+        logger.info("verifyEmailOrPasswordIncorrectError completed");
         return this;
     }
 
