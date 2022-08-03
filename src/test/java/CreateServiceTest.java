@@ -23,12 +23,11 @@ public class CreateServiceTest extends BaseTest{
                 .inputListingPrice(listingPrice)
                 .inputSellingPrice(listingPrice,generate.generateNumber(2))
                 .uncheckOnShowAsListingService()
-                .inputServiceDescription("Service description")
-                .inputMultipleCollection("Cham soc mat")
+//                .inputServiceDescription("Service description")
+                .inputCollections()
                 .uploadImages("cham-soc-mat.jpg","giam-beo-bung.jpg")
                 .inputLocations("Thu Duc", "Quan 9", "Quan 1", "Quan 2")
                 .inputTimeSlots("10:00","12:00","14:30");
-
-    }
+   }
 
 }

@@ -38,14 +38,20 @@ public class CreateServicePage {
     @FindBy(xpath = "(//input[@inputmode='numeric'])[2]")
     WebElement SELLING_PRICE;
 
-    @FindBy(xpath = "(//input[@type='checkbox'])[1]/parent::*")
-    WebElement SHOW_AS_LISTING_CBX;
+    @FindBy(xpath = "(//input[@type='checkbox'])[1]")
+    WebElement SHOW_AS_LISTING_CBX_VALUE;
+
+    @FindBy(xpath = "(//input[@type='checkbox'])[1]/following-sibling::div")
+    WebElement SHOW_AS_LISTING_CBX_ACTION;
 
     @FindBy(xpath = "//input[@name='serviceDescription']")
     WebElement SERVICE_DESCRIPTION;
 
-    @FindBy(css = "#react-select-2-input")
-    WebElement COLLECTION_INPUT;
+    @FindBy(css = ".product-form-collection-selector")
+    WebElement COLLECTION_FORM;
+
+    @FindBy(xpath = "(//div[contains(@id,'react-select-2-option')])[1]")
+    WebElement COLLECTION_SUGGESTION_1;
 
     @FindBy(xpath = "//input[@type='file' and @style ='display: none;']")
     WebElement IMAGE_INPUT;
@@ -84,16 +90,16 @@ public class CreateServicePage {
         int listingPricePars = Integer.parseInt(listingPrice);
         int sellingPrice = listingPricePars - listingPricePars * Integer.parseInt(discountPercent)/100;
         commons.inputText(SELLING_PRICE,  String.valueOf(sellingPrice));
-        logger.info("Input "+String.valueOf(sellingPrice)+ " into Selling price field");
+        logger.info("Input "+ String.valueOf(sellingPrice)+ " into Selling price field");
         return this;
     }
     public CreateServicePage checkOnShowAsListingService(){
-        commons.checkTheCheckBoxOrRadio(SHOW_AS_LISTING_CBX);
+        commons.checkTheCheckBoxOrRadio(SHOW_AS_LISTING_CBX_VALUE,SHOW_AS_LISTING_CBX_ACTION);
         logger.info("Check on Show as listing service checkbox");
         return this;
     }
     public  CreateServicePage uncheckOnShowAsListingService(){
-        commons.uncheckTheCheckboxOrRadio(SHOW_AS_LISTING_CBX);
+        commons.uncheckTheCheckboxOrRadio(SHOW_AS_LISTING_CBX_VALUE,SHOW_AS_LISTING_CBX_ACTION);
         logger.info("Uncheck on Show as listing service checkbox");
         return this;
     }
@@ -102,11 +108,11 @@ public class CreateServicePage {
         logger.info("Input "+description+ " into description field");
         return this;
     }
-    public CreateServicePage inputMultipleCollection(String...collectionNames){
-        for (String collect: collectionNames) {
-            commons.inputText(COLLECTION_INPUT,collect + "\n");
-            logger.info("Input collection: "+collect);
-        }
+    public CreateServicePage inputCollections(){
+        commons.clickElement(COLLECTION_FORM);
+        logger.info("Click on collection form");
+        commons.clickElement(COLLECTION_SUGGESTION_1);
+        logger.info("Select collection 1");
         return this;
     }
     public CreateServicePage uploadImages(String...fileNames){
@@ -117,7 +123,7 @@ public class CreateServicePage {
     public CreateServicePage inputLocations(String...locations){
         for (String loctaion:locations) {
             commons.inputText(LOCATION,loctaion+"\n");
-            logger.info("Input "+loctaion+ "into Location fiel");
+            logger.info("Input "+loctaion+ " into Location field");
         }
         return this;
     }
