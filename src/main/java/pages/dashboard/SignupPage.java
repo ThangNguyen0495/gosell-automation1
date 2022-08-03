@@ -93,6 +93,14 @@ public class SignupPage {
         return this;
     }
 
+    public SignupPage fillOutSignupForm(String country, String user, String password) {
+    	selectCountry(country);
+    	inputMailOrPhoneNumber(user);
+    	inputPassword(password);
+    	clickSignupBtn();
+        return this;
+    }    
+    
     public String getOTPCode(String userLoginDB) throws SQLException {
         Connection connection = new InitConnection().createConnection();
         String query = "select * from \"gateway-services\".jhi_user ju where login = '%s'".formatted(userLoginDB);

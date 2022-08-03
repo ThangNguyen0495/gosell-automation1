@@ -6,14 +6,12 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.List;
 
 public class UICommonAction {
 	
@@ -107,7 +105,7 @@ public class UICommonAction {
     
 	public ArrayList<String> getAllWindowsHandles(WebDriver driver) {
 		ArrayList<String> availableWindows =  new ArrayList<String>(driver.getWindowHandles());
-		logger.debug("All available window(s): "+availableWindows.size());
+		logger.debug("All opening window(s): "+availableWindows);
 		return availableWindows;
 	}
 	
