@@ -38,4 +38,7 @@ public class StaffElement {
 
     @FindBy (css = "div.header-right__ele-right > a[href='/logout']")
     WebElement LOGOUT_BTN;
+
+    @FindBy (css = "div.modal-content > div > button")
+    WebElement CLOSE_DOWNLOAD_APP_POPUP;
 }

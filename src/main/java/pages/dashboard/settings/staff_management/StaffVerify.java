@@ -1,10 +1,14 @@
 package pages.dashboard.settings.staff_management;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.asserts.SoftAssert;
+import org.testng.Assert;
+import utilities.assert_customize.AssertCustomize;
 import utilities.role_matrix.RoleMatrix;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,29 +18,36 @@ import static utilities.links.Links.DOMAIN;
 
 public class StaffVerify extends StaffElement {
     WebDriverWait wait;
-    SoftAssert soft = new SoftAssert();
+    AssertCustomize assertCustomize;
+
+    Logger logger = LogManager.getLogger(StaffVerify.class);
+
+    Integer countFail = 0;
 
     public StaffVerify(WebDriver driver) {
         super(driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        assertCustomize = new AssertCustomize(driver);
     }
 
-    public void checkNoPermission(int functionId) throws InterruptedException {
-        System.out.println(functionId + ": " +new RoleMatrix().pagePath().get(functionId));
-        driver.get(DOMAIN + new RoleMatrix().pagePath().get(functionId));
+    public void checkNoPermission(int pageId) throws InterruptedException, IOException {
+        driver.get(DOMAIN + new RoleMatrix().pagePath().get(pageId));
+        logger.info("Access to %s page".formatted(new RoleMatrix().pageList().get(pageId)));
         sleep(1000);
-        soft.assertEquals(driver.getCurrentUrl(), DOMAIN + "/404", "[URL] 404 page is not displayed.");
+        countFail = assertCustomize.assertEquals(countFail, driver.getCurrentUrl(), DOMAIN + "/404", "[URL] 404 page is not displayed.");
+        logger.info("Verify that 404 page should be shown instead of %s".formatted(new RoleMatrix().pageList().get(pageId)));
     }
 
-    public void checkPermission(int functionId) throws InterruptedException {
-        String path = new RoleMatrix().pagePath().get(functionId);
-        String title = new RoleMatrix().pageList().get(functionId);
-        System.out.println(functionId + ": " + path);
-        System.out.println(functionId + ": " + title);
+    public void checkPermission(int pageId) throws InterruptedException, IOException {
+        String path = new RoleMatrix().pagePath().get(pageId);
+        String title = new RoleMatrix().pageList().get(pageId);
         driver.get(DOMAIN + path);
+        logger.info("Access to %s page".formatted(title));
         sleep(1000);
-        soft.assertEquals(driver.getCurrentUrl(), DOMAIN + path, "[URL] %s page is not displayed.".formatted(title));
-        soft.assertEquals(driver.getTitle(), title, "[Title] %s title does not match.".formatted(title));
+        countFail = assertCustomize.assertEquals(countFail, driver.getCurrentUrl(), DOMAIN + path, "[URL] %s page is not displayed.".formatted(title));
+        logger.info(("Verify that current URL is: %s").formatted(DOMAIN + path));
+        countFail = assertCustomize.assertEquals(countFail, driver.getTitle(), title, "[Title] %s title does not match.".formatted(title));
+        logger.info("Verify that page should be %s".formatted(title));
     }
 
     public List<Integer> getRoleList(List<Integer> roleList) {
@@ -51,7 +62,6 @@ public class StaffVerify extends StaffElement {
 
     public List<Integer> mixRoleList(List<Integer> roleList) {
         List<Integer> list = new ArrayList<>();
-
         for (int i = 0; i < new RoleMatrix().staffRoleEncode().get(0).size(); i++) {
             list.add(0);
         }
@@ -63,20 +73,21 @@ public class StaffVerify extends StaffElement {
         return list;
     }
 
-    public StaffVerify verifyPermissionOfStaff(List<Integer> roleList) throws InterruptedException {
+    public void verifyPermissionOfStaff(List<Integer> roleList) throws InterruptedException, IOException {
         roleList = getRoleList(roleList);
         List<Integer> list = mixRoleList(roleList);
-        System.out.println(list);
-        for (int i = 0; i < list.size() -1; i ++) {
+        for (int i = 0; i < list.size() - 1; i++) {
             if (list.get(i) == 0) {
                 checkNoPermission(i);
             } else {
                 checkPermission(i);
             }
         }
-        return this;
     }
+
     public void completeVerify() {
-        soft.assertAll();
+        if (countFail > 0) {
+            Assert.fail("[Failed] Fail %d cases".formatted(countFail));
+        }
     }
 }

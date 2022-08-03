@@ -22,11 +22,10 @@ public class MailPage {
     }
 
     public MailPage openMail(String email) throws InterruptedException {
-        ((JavascriptExecutor) driver).executeScript("window.open('about:blank','_blank');");
+        sleep(5000);
+        ((JavascriptExecutor) driver).executeScript("window.open('%s');".formatted("https://generator.email/" + email));
         var tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabs.size() - 1));
-        sleep(3000);
-        driver.get("https://generator.email/" + email);
         return this;
     }
 
