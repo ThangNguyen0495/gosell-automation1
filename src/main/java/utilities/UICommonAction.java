@@ -60,21 +60,32 @@ public class UICommonAction {
 	}	
 
 	public void uploadMultipleFile(WebElement element,String folder, String...fileNames){
-		String filePath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator +"uploadfile"+ File.separator + folder;
+		String filePath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator +"uploadfile"+ File.separator + folder + File.separator;
 		String fullName = "";
 		for (String fileName: fileNames) {
 			fullName = fullName + filePath + fileName + "\n";
 		}
-		inputText(element,fullName);
+		logger.info("File path: "+fullName);
+		element.sendKeys(fullName.trim());
 	}
 	public void checkTheCheckBoxOrRadio (WebElement element){
 		if (!element.isSelected()){
 			clickElement(element);
 		}
 	}
+	public void checkTheCheckBoxOrRadio (WebElement elementValue,WebElement elementAction){
+		if (!elementValue.isSelected()){
+			clickElement(elementAction);
+		}
+	}
 	public void uncheckTheCheckboxOrRadio (WebElement element){
 		if (element.isSelected()){
 			clickElement(element);
+		}
+	}
+	public void uncheckTheCheckboxOrRadio (WebElement elementValue,WebElement elementAction){
+		if (elementValue.isSelected()){
+			clickElement(elementAction);
 		}
 	}
 
@@ -108,5 +119,12 @@ public class UICommonAction {
 	public void switchToWindow(WebDriver driver, String handle) {
 		driver.switchTo().window(handle);
 		logger.info("Switched to window/tab whose handle is: "+handle);
-	}	
+	}
+
+	public void sendKeyToElementByJS(WebDriver driver, WebElement element, String value){
+		JavascriptExecutor jsExecutor =(JavascriptExecutor) driver;
+		jsExecutor.executeScript("arguments[0].setAttribute('value', '" + value + "')", element);
+	}
+
+
 }
