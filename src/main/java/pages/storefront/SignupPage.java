@@ -1,5 +1,7 @@
 package pages.storefront;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import utilities.UICommonAction;
 import utilities.database.InitConnection;
 
 import java.sql.Connection;
@@ -16,17 +19,20 @@ import java.sql.SQLException;
 import java.time.Duration;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
 import static utilities.links.Links.*;
 
 public class SignupPage {
 
+	final static Logger logger = LogManager.getLogger(SignupPage.class);
+	
     WebDriver driver;
     WebDriverWait wait;
+    UICommonAction commonAction;
 
     public SignupPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        commonAction = new UICommonAction(driver);
         PageFactory.initElements(driver, this);
     }
 
@@ -75,47 +81,51 @@ public class SignupPage {
     }
     
     public SignupPage clickUserInfoIcon() {
-    	USER_INFO_ICON.click();
+    	commonAction.clickElement(USER_INFO_ICON);
+    	logger.info("Clicked on User Info icon.");
         return this;
     }    
     
     public SignupPage clickSignupIcon() {
-    	SIGNUP_ICON.click();
+    	commonAction.clickElement(SIGNUP_ICON);
+    	logger.info("Clicked on Signup icon.");   
     	return this;
     }    
     
     public SignupPage selectCountry(String country) {
-    	wait.until(ExpectedConditions.elementToBeClickable(COUNTRY_DROPDOWN)).click();
+    	commonAction.clickElement(COUNTRY_DROPDOWN);
     	driver.findElement(By.xpath("//ul[@id='signup-country-code-menu']//span[text()='%s']".formatted(country))).click();
-        return this;
+    	logger.info("Selected country: " + country);
+    	return this;
     }
 
     public SignupPage inputMailOrPhoneNumber(String user) {
-    	USERNAME.clear();
-        USERNAME.sendKeys(user);
+    	commonAction.inputText(USERNAME, user);
+    	logger.info("Input '" + user + "' into Username field.");
         return this;
     }
 
     public SignupPage inputPassword(String password) {
-    	PASSWORD.clear();
-        PASSWORD.sendKeys(password);
+    	commonAction.inputText(PASSWORD, password);
+    	logger.info("Input '" + password + "' into Password field.");
         return this;
     }
     
     public SignupPage inputDisplayName(String name) {
-    	DISPLAY_USERNAME.clear();
-    	DISPLAY_USERNAME.sendKeys(name);
+    	commonAction.inputText(DISPLAY_USERNAME, name);
+    	logger.info("Input '" + name + "' into Display Name field.");
     	return this;
     }
     
     public SignupPage inputBirthday(String date) {
-    	BIRTHDAY.clear();
-    	BIRTHDAY.sendKeys(date);
+    	commonAction.inputText(BIRTHDAY, date);
+    	logger.info("Input '" + date + "' into Birthday field.");
     	return this;
     }
 
     public SignupPage clickSignupBtn() {
-        SIGNUP_BTN.click();
+    	commonAction.clickElement(SIGNUP_BTN);
+    	logger.info("Clicked on Signup button.");  
         return this;
     }
 
@@ -127,16 +137,19 @@ public class SignupPage {
         while (resultSet.next()) {
             OTP_CODE = resultSet.getString("activation_key");
         }
+        logger.info("OTP Code retrieved: " + OTP_CODE);
         return OTP_CODE;
     }    
     
     public SignupPage inputVerificationCode(String verificationCode) throws SQLException {
-        wait.until(ExpectedConditions.visibilityOf(OTP)).sendKeys(verificationCode);
+    	commonAction.inputText(OTP, verificationCode);
+    	logger.info("Input '" + verificationCode + "' into Verification Code field.");
         return this;
     }
 
     public void clickConfirmBtn() {
-        CONFIRM_OTP.click();
+    	commonAction.clickElement(CONFIRM_OTP);
+    	logger.info("Clicked on Confirm button."); 
     }
     
 }
