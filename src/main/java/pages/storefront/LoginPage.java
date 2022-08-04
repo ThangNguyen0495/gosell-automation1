@@ -61,6 +61,11 @@ public class LoginPage {
         wait.until(ExpectedConditions.titleIs(LOGIN_PAGE_TITLE1));
         return this;
     }
+    public LoginPage navigate(String domain) {
+        driver.get(domain);
+        logger.debug("Page title is: "+driver.getTitle());
+        return this;
+    }
 
     public LoginPage clickUserInfoIcon() {
     	commonAction.clickElement(USER_INFO_ICON);

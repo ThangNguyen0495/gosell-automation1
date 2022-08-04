@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import pages.dashboard.home.HomePage;
 import utilities.UICommonAction;
 import utilities.data.DataGenerator;
@@ -24,11 +25,14 @@ public class CreateServicePage {
 
     public CreateServicePage(WebDriver driver){
         this.driver=driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         commons = new UICommonAction(driver);
         generate = new DataGenerator();
         PageFactory.initElements(driver,this);
     }
+    @FindBy(xpath = "(//button[contains(@class,'btn-save')])[1]")
+    WebElement SAVE_BTN;
+
     @FindBy(xpath = "//input[@name='serviceName']")
     WebElement SERVICE_NAME;
 
@@ -44,7 +48,7 @@ public class CreateServicePage {
     @FindBy(xpath = "(//input[@type='checkbox'])[1]/following-sibling::div")
     WebElement SHOW_AS_LISTING_CBX_ACTION;
 
-    @FindBy(xpath = "//input[@name='serviceDescription']")
+    @FindBy(xpath = " //div[@name='serviceDescription']//div[@class='fr-wrapper show-placeholder']/div")
     WebElement SERVICE_DESCRIPTION;
 
     @FindBy(css = ".product-form-collection-selector")
@@ -74,6 +78,9 @@ public class CreateServicePage {
     @FindBy(css = "#seoUrl")
     WebElement SEO_URL;
 
+    @FindBy(css = ".modal-body")
+    WebElement POPUP_MESSAGE;
+
     public CreateServicePage inputServiceName(String serviceName){
         commons.inputText(SERVICE_NAME,serviceName);
         logger.info("Input "+serviceName+ " into Service name field");
@@ -86,12 +93,12 @@ public class CreateServicePage {
         return this;
     }
 
-    public CreateServicePage inputSellingPrice (String listingPrice, String discountPercent){
+    public String inputSellingPrice (String listingPrice, String discountPercent){
         int listingPricePars = Integer.parseInt(listingPrice);
         int sellingPrice = listingPricePars - listingPricePars * Integer.parseInt(discountPercent)/100;
         commons.inputText(SELLING_PRICE,  String.valueOf(sellingPrice));
         logger.info("Input "+ String.valueOf(sellingPrice)+ " into Selling price field");
-        return this;
+        return String.valueOf(sellingPrice)+"đ";
     }
     public CreateServicePage checkOnShowAsListingService(){
         commons.checkTheCheckBoxOrRadio(SHOW_AS_LISTING_CBX_VALUE,SHOW_AS_LISTING_CBX_ACTION);
@@ -129,8 +136,8 @@ public class CreateServicePage {
     }
     public CreateServicePage inputTimeSlots(String...timeSlots){
         for (String timeSlot:timeSlots) {
-            commons.inputText(TIME_SLOTS,timeSlot);
-            logger.info("Input "+timeSlot+" into TimeSlot field");
+            commons.inputText(TIME_SLOTS,timeSlot +"\n");
+            logger.info("Input %s into TimeSlot field".formatted(timeSlots));
         }
         return this;
     }
@@ -152,6 +159,18 @@ public class CreateServicePage {
     public CreateServicePage inputSEOUrl (String SEOUrl){
         commons.inputText(SEO_URL, SEOUrl);
         logger.info("Input "+SEOUrl+ " into SEO url field");
+        return this;
+    }
+    public CreateServicePage clickSaveBtn (){
+        commons.clickElement(SAVE_BTN);;
+        logger.info("Click on Save button");
+        return this;
+    }
+
+    public CreateServicePage verifyCreateSeviceSuccessfulMessage() {
+        String message= commons.getText(POPUP_MESSAGE);
+        Assert.assertEquals(message,"Sản phẩm được tạo thành công!");
+        logger.info("Create service successfully popup is shown");
         return this;
     }
 
