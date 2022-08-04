@@ -98,7 +98,7 @@ public class CreateServicePage {
         int sellingPrice = listingPricePars - listingPricePars * Integer.parseInt(discountPercent)/100;
         commons.inputText(SELLING_PRICE,  String.valueOf(sellingPrice));
         logger.info("Input "+ String.valueOf(sellingPrice)+ " into Selling price field");
-        return String.valueOf(sellingPrice)+"đ";
+        return String.valueOf(sellingPrice);
     }
     public CreateServicePage checkOnShowAsListingService(){
         commons.checkTheCheckBoxOrRadio(SHOW_AS_LISTING_CBX_VALUE,SHOW_AS_LISTING_CBX_ACTION);
@@ -173,6 +173,7 @@ public class CreateServicePage {
         logger.info("Create service successfully popup is shown");
         return this;
     }
+
 
 
 

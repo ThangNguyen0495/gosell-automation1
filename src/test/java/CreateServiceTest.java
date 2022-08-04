@@ -57,9 +57,11 @@ public class CreateServiceTest extends BaseTest{
        headerSF.searchWithFullName(serviceName)
                .verifySearchSuggestion(serviceName,sellingPrice)
                .clickSearchResult();
+       serviceDetailPage= new ServiceDetailPage(driver);
        serviceDetailPage.verifyServiceName(serviceName)
                .verifyListingPrice(listingPrice)
-               .verifySellingPrice(sellingPrice);
+               .verifySellingPrice(sellingPrice)
+               .verifyLocations(locations);
 
    }
 

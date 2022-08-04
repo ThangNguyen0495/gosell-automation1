@@ -7,11 +7,13 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UICommonAction {
 	
@@ -122,6 +124,18 @@ public class UICommonAction {
 	public void sendKeyToElementByJS(WebDriver driver, WebElement element, String value){
 		JavascriptExecutor jsExecutor =(JavascriptExecutor) driver;
 		jsExecutor.executeScript("arguments[0].setAttribute('value', '" + value + "')", element);
+	}
+	public void waitForElementInvisible(WebDriver driver, WebElement element){
+		wait= new WebDriverWait(driver,Duration.ofSeconds(30));
+		wait.until(ExpectedConditions.invisibilityOf(element));
+	}
+	public void waitForElementVisible(WebDriver driver, WebElement element){
+		wait= new WebDriverWait(driver,Duration.ofSeconds(30));
+		wait.until(ExpectedConditions.visibilityOf(element));
+	}
+	public List<WebElement> getAllOptionInDropDown(WebElement element){
+		Select select = new Select(element);
+		return select.getOptions();
 	}
 
 

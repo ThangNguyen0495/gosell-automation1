@@ -31,6 +31,8 @@ public class HeaderSF {
     @FindBy(xpath = "//input[@type='search']")
     WebElement SEARCH_FIELD_TO_INPUT;
 
+    @FindBy (css = ".lds-ellipsis")
+    WebElement SEARCH_LOADING;
     @FindBy(xpath = "//h3[contains(@class,'search-result-item-title')]")
     List<WebElement> SEARCH_SUGGESTION_RESULT_TITLE;
 
@@ -45,18 +47,14 @@ public class HeaderSF {
         return this;
     }
     public HeaderSF verifySearchSuggestion(String fullName, String price){
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
+        commons.waitForElementVisible(driver,SEARCH_LOADING);
+        commons.waitForElementInvisible(driver,SEARCH_LOADING);
         String searchSuggestionItem1_Title = commons.getText(SEARCH_SUGGESTION_RESULT_TITLE.get(0));
         Assert.assertEquals(searchSuggestionItem1_Title,fullName);
         logger.info("Verify name: %s display on search suggestion".formatted(fullName));
         String searchSuggestionItem1_Price = commons.getText(SEARCH_SUGGESTION_RESULT_PRICE.get(0));
-        Assert.assertEquals(String.join("", searchSuggestionItem1_Price.split(",")), price+"d");
-        logger.info("Verify price: %s display on search suggestion".formatted(price+"đ"));
+        Assert.assertEquals(String.join("",searchSuggestionItem1_Price.split(",")), price + "đ");
+        logger.info("Verify price: %s display on search suggestion".formatted(price));
         return this;
     }
     public HeaderSF clickSearchResult (){
