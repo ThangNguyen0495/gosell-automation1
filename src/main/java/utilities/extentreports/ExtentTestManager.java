@@ -25,12 +25,11 @@ public class ExtentTestManager {
         return test;
     }
 
-    public static void addScreenShot(Status status, String message, WebDriver driver) {
+    public static void addScreenShot(Status status, Throwable exception, WebDriver driver) {
         String base64Image = "data:image/png;base64,"
                 + ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
-        getTest().log(status, message,
+        getTest().log(status, exception,
                 getTest().addScreenCaptureFromBase64String(base64Image).getModel().getMedia().get(0));
     }
-
-
+    
 }

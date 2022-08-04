@@ -8,7 +8,7 @@ import utilities.data.DataGenerator;
 import utilities.driver.InitWebdriver;
 
 public class BaseTest {
-    WebDriver driver;
+    public WebDriver driver;
     
     DataGenerator generate;
 	UICommonAction commonAction;

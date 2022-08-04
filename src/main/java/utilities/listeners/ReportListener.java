@@ -15,8 +15,7 @@ import static utilities.extentreports.ExtentManager.getExtentReports;
 public class ReportListener implements ITestListener {
 	
 	private static final Logger Logger =  LogManager.getLogger(ReportListener.class);
-
-    WebDriver driver;
+	WebDriver driver = null;
 
     public String getTestName(ITestResult result) {
         return result.getTestName() != null ? result.getTestName()
@@ -26,7 +25,16 @@ public class ReportListener implements ITestListener {
     public String getTestDescription(ITestResult result) {
         return result.getMethod().getDescription() != null ? result.getMethod().getDescription() : getTestName(result);
     }
-
+    
+    public WebDriver getDriver(ITestResult iTestResult) {
+        try {
+			driver= (WebDriver)iTestResult.getTestClass().getRealClass().getField("driver").get(iTestResult.getInstance());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return driver;
+    }
+    
     @Override
     public void onStart(ITestContext iTestContext) {
     	Logger.info("Start testing " + iTestContext.getName());
@@ -54,9 +62,11 @@ public class ReportListener implements ITestListener {
     public void onTestFailure(ITestResult iTestResult) {
     	Logger.error("[FAILED] " + getTestName(iTestResult) + " has failed.");
     	Logger.debug("Caused by Exception: " + iTestResult.getThrowable());
-
-//        ExtentTestManager.addScreenShot(Status.FAIL, getTestName(iTestResult));
-        ExtentTestManager.getTest().log(Status.FAIL, iTestResult.getThrowable());
+        if (getDriver(iTestResult) != null) {
+        	ExtentTestManager.addScreenShot(Status.FAIL, iTestResult.getThrowable(), getDriver(iTestResult));
+        } else {
+        	ExtentTestManager.getTest().log(Status.FAIL, iTestResult.getThrowable());
+        }
     }
 
     @Override
