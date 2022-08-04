@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -138,5 +139,14 @@ public class UICommonAction {
 		return select.getOptions();
 	}
 
+	public void waitTillElementDisappear(WebElement element, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		try {
+			wait.until(ExpectedConditions.visibilityOf(element));
+		} catch (TimeoutException ex) {
+			logger.debug("Timeout waiting for element to disappear: " + ex);
+		}
+	    wait.until(ExpectedConditions.invisibilityOf(element));
+	}
 
 }

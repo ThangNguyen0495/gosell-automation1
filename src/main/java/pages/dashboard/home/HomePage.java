@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.storefront.LoginPage;
 import utilities.UICommonAction;
 
 import java.time.Duration;
@@ -27,10 +26,28 @@ public class HomePage {
     @FindBy(xpath = "//a[@name='component.navigation.services']")
     WebElement SERVICES_LINK;
 
+    @FindBy (css = ".header-right__ele-right a[href='/logout']")
+    WebElement LOGOUT_BTN;
+    
+    @FindBy (css = ".loading .lds-dual-ring-grey")
+    WebElement SPINNER;    
+    
     public HomePage goToSevices(){
         commons.clickElement(SERVICES_LINK);
         logger.info("Click on service item on menu");
         return this;
     }
+
+    public HomePage waitTillSpinnerDisappear(){
+        commons.waitTillElementDisappear(SPINNER, 15);
+        logger.info("Spinner has finished loading");
+        return this;
+    }
+    
+    public HomePage clickLogout(){
+        commons.clickElement(LOGOUT_BTN);
+        logger.info("Clicked on Logout linktext");
+        return this;
+    }    
 
 }
