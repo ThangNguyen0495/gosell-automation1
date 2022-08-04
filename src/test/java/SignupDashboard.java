@@ -1,9 +1,5 @@
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import utilities.driver.InitWebdriver;
 
 import pages.dashboard.SignupPage;
 import pages.Mailnesia;
@@ -13,8 +9,6 @@ import java.sql.SQLException;
 public class SignupDashboard extends BaseTest{
 
 	SignupPage signupPage;
-	Mailnesia mailnesiaPage;
-	WebDriver driver1;
 	
     @BeforeMethod
     public void setup() throws InterruptedException {
@@ -27,43 +21,30 @@ public class SignupDashboard extends BaseTest{
     	String phone = "1122334455";
     	
     	signupPage.navigate()
-                .selectCountry("Andorra")
-                .inputMailOrPhoneNumber(phone)
-                .inputPassword("Abc@12345")
-                .clickSignupBtn()
+                .fillOutSignupForm("Andorra", phone, "Abc@12345")
                 .inputVerificationCode(signupPage.getOTPCode("+376:" + phone));
 //                .clickConfirmBtn();
-        Thread.sleep(5000);
+//        Thread.sleep(2000);
     }
     
-//    @Test
+    @Test
     public void SignupWithEmail() throws SQLException, InterruptedException {
     	String username = "tienvan345";
     	
     	signupPage.navigate()
-    	.selectCountry("Andorra")
-    	.inputMailOrPhoneNumber(username + "@mailnesia.com")
-    	.inputPassword("Abc@12345")
-    	.clickSignupBtn();
+    	.fillOutSignupForm("Andorra", username + "@mailnesia.com", "Abc@12345");
+    	Thread.sleep(7000);
     	
     	// Get verification code from Mailnesia
-    	Thread.sleep(7000);
-    	driver1 = new InitWebdriver().getDriver("chrome", "false");
-    	mailnesiaPage = new Mailnesia(driver1);
-    	String verificationCode = mailnesiaPage.navigate(username).getVerificationCode();
-    	driver1.quit();
+    	commonAction.openNewTab(driver); // Open a new tab
+    	commonAction.switchToWindow(driver, 1); // Switch to the newly opened tab
+    	String verificationCode = new Mailnesia(driver).navigate(username).getVerificationCode(); // Get verification code
+    	commonAction.closeTab(driver); // Close the newly opened tab
+    	commonAction.switchToWindow(driver, 0); // Switch back to the original tab
     	
     	signupPage.inputVerificationCode(verificationCode);
 //    	.clickConfirmBtn();
-        Thread.sleep(3000);
+        Thread.sleep(2000);
     }
-    
-    @AfterMethod
-    public void tearDown() {
-    	super.tearDown();
-        if (driver1 != null) {
-            driver1.quit();
-        }
-    }   
     
 }
