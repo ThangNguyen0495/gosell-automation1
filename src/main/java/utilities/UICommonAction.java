@@ -90,39 +90,39 @@ public class UICommonAction {
 		}
 	}
 
-	public void openNewTab(WebDriver driver) {
+	public void openNewTab() {
 		((JavascriptExecutor) driver).executeScript("window.open('about:blank','_blank');");
 		logger.info("Opened a new blank tab.");
 	}
 	
-	public void closeTab(WebDriver driver) {
+	public void closeTab() {
 		((JavascriptExecutor) driver).executeScript("window.close();");
 		logger.info("Closed tab.");
 	}
 	
-    public String getCurrentWindowHandle(WebDriver driver) {
+    public String getCurrentWindowHandle() {
 		String currentWindows =  driver.getWindowHandle();
 		logger.debug("The current windows handle is: '"+currentWindows+"'");
 		return currentWindows;
 	}
     
-	public ArrayList<String> getAllWindowsHandles(WebDriver driver) {
+	public ArrayList<String> getAllWindowHandles() {
 		ArrayList<String> availableWindows =  new ArrayList<String>(driver.getWindowHandles());
 		logger.debug("All opening window(s): "+availableWindows);
 		return availableWindows;
 	}
 	
-	public void switchToWindow(WebDriver driver, int index) {
-		driver.switchTo().window(getAllWindowsHandles(driver).get(index));
+	public void switchToWindow(int index) {
+		driver.switchTo().window(getAllWindowHandles().get(index));
 		logger.info("Switched to window/tab indexed: "+index);
 	}	
 	
-	public void switchToWindow(WebDriver driver, String handle) {
+	public void switchToWindow(String handle) {
 		driver.switchTo().window(handle);
 		logger.info("Switched to window/tab whose handle is: "+handle);
 	}
 
-	public void sendKeyToElementByJS(WebDriver driver, WebElement element, String value){
+	public void sendKeyToElementByJS(WebElement element, String value){
 		JavascriptExecutor jsExecutor =(JavascriptExecutor) driver;
 		jsExecutor.executeScript("arguments[0].setAttribute('value', '" + value + "')", element);
 	}
