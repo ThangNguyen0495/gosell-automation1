@@ -47,8 +47,8 @@ public class HeaderSF {
         return this;
     }
     public HeaderSF verifySearchSuggestion(String fullName, String price){
-        commons.waitForElementVisible(driver,SEARCH_LOADING);
-        commons.waitForElementInvisible(driver,SEARCH_LOADING);
+        commons.waitForElementVisible(SEARCH_LOADING);
+        commons.waitForElementInvisible(SEARCH_LOADING);
         String searchSuggestionItem1_Title = commons.getText(SEARCH_SUGGESTION_RESULT_TITLE.get(0));
         Assert.assertEquals(searchSuggestionItem1_Title,fullName);
         logger.info("Verify name: %s display on search suggestion".formatted(fullName));
