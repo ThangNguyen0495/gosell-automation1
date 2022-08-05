@@ -27,18 +27,36 @@ public class StaffElement {
     @FindBy (css = "div.modal-body> div > div >input[name = 'email']")
     WebElement STAFF_MAIL;
 
+    @FindBy (css = "tr:nth-child(2)>td>div>div.staff__email.gsa__color--gray")
+    WebElement STAFF_MAIL_VALUE;
+
+    @FindBy (css = "input[id ^= checkbox-permissionCode]")
+    List<WebElement> STAFF_PERMISSIONS_CHECKBOX;
+
     @FindBy (css = "div.permission__body > fieldset > div > div > div > div > label")
-    List<WebElement> STAFF_PERMISSIONS;
+    List<WebElement> STAFF_PERMISSIONS_LABEL;
+
+    @FindBy (css = "input[id^=checkbox-branchId]")
+    List<WebElement> STAFF_BRANCH_CHECKBOX;
 
     @FindBy (css = "div.branch__body > fieldset > div > div > div > div > label")
-    List<WebElement> STAFF_BRANCH;
+    List<WebElement> STAFF_BRANCH_LABEL;
 
     @FindBy (css = "div.staff-modal__footer > button.gs-button__green")
     WebElement DONE_BTN;
 
+    @FindBy (css = "div.Toastify > div > div > div")
+    WebElement TOAST_MESSAGE;
+
     @FindBy (css = "div.header-right__ele-right > a[href='/logout']")
     WebElement LOGOUT_BTN;
 
-    @FindBy (css = "div.modal-content > div > button")
-    WebElement CLOSE_DOWNLOAD_APP_POPUP;
+    @FindBy (css = "tr:nth-child(2) > td.gsa-white-space--nowrap > div > i:nth-child(1)")
+    WebElement EDIT_ICON;
+
+    @FindBy (css = "tr:nth-child(2) > td.gsa-white-space--nowrap > div > i:nth-child(2)")
+    WebElement DELETE_ICON;
+
+    @FindBy (css = "div.modal-footer>button.gs-button__green")
+    WebElement OK_BTN;
 }
