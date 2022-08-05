@@ -1,5 +1,6 @@
 import org.testng.annotations.Test;
 import pages.dashboard.LoginPage;
+import pages.dashboard.home.HomePage;
 
 import static utilities.account.AccountTest.*;
 import static utilities.message.Message.*;
@@ -50,17 +51,19 @@ public class LoginDashboard extends BaseTest {
     public void TC06_DB_LoginWithValidPhoneNumberAccount() {
         new LoginPage(driver).navigate()
                 .performLogin(PHONE, PASSWORD);
+        new HomePage(driver).waitTillSpinnerDisappear().clickLogout();
     }
 
     @Test
     public void TC07_DB_LoginWithValidMailAccount() {
         new LoginPage(driver).navigate()
                 .performLogin(MAIL, PASSWORD);
+        new HomePage(driver).waitTillSpinnerDisappear().clickLogout();
     }
 
     @Test
-    public void TC08_DB_LoginWithFacebook() throws InterruptedException {
-        new LoginPage(driver).navigate().performLoginWithFacebook("giaiphap.store@gmail.com", "RAPtor_1234%");
-        Thread.sleep(10000);
+    public void TC08_DB_LoginWithFacebook() {
+        new LoginPage(driver).navigate().performLoginWithFacebook("trangthuy9662@gmail.com", "123456aA@");     
+        new HomePage(driver).waitTillSpinnerDisappear().clickLogout();
     }
 }

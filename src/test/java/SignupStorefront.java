@@ -36,11 +36,11 @@ public class SignupStorefront extends BaseTest{
     	Thread.sleep(7000);
 
     	// Get verification code from Mailnesia
-    	commonAction.openNewTab(driver); // Open a new tab
-    	commonAction.switchToWindow(driver, 1); // Switch to the newly opened tab
+    	commonAction.openNewTab(); // Open a new tab
+    	commonAction.switchToWindow(1); // Switch to the newly opened tab
     	String verificationCode = new Mailnesia(driver).navigate(username).getVerificationCode(); // Get verification code
-    	commonAction.closeTab(driver); // Close the newly opened tab
-    	commonAction.switchToWindow(driver, 0); // Switch back to the original tab
+    	commonAction.closeTab(); // Close the newly opened tab
+    	commonAction.switchToWindow(0); // Switch back to the original tab
     	
     	signupPage.inputVerificationCode(verificationCode);
 //    	.clickConfirmBtn();
