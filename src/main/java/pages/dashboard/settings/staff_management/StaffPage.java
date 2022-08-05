@@ -2,25 +2,30 @@ package pages.dashboard.settings.staff_management;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import pages.dashboard.home.HomePage;
 import utilities.role_matrix.RoleMatrix;
+import utilities.screenshot.Screenshot;
 
+import java.io.IOException;
 import java.util.List;
 
 import static java.lang.Thread.sleep;
-import static utilities.links.Links.*;
+import static utilities.links.Links.SETTING_PAGE_TITLE;
 
 public class StaffPage extends StaffVerify {
 
     Logger logger = LogManager.getLogger(StaffPage.class);
+    public static String staffMail;
+
     public StaffPage(WebDriver driver) {
         super(driver);
     }
 
     public StaffPage navigate() throws InterruptedException {
-        driver.get(DOMAIN + SETTING_PATH);
+        new HomePage(driver).navigateToSettingsPage();
         logger.info("Access to Setting page");
         wait.until(ExpectedConditions.titleIs(SETTING_PAGE_TITLE));
         logger.info("Title of Setting page is %s".formatted(driver.getTitle()));
@@ -29,14 +34,51 @@ public class StaffPage extends StaffVerify {
         return this;
     }
 
-    public StaffPage clickOnTheAddStaffBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(ADD_STAFF_BTN)).click();
-        logger.info("Click on Add Staff button to open Add staff popup");
+    public StaffPage waitLoginPage() throws InterruptedException {
+        sleep(3000);
         return this;
     }
 
+    public StaffPage clickOnTheAddStaffBtn() {
+        wait.until(ExpectedConditions.elementToBeClickable(ADD_STAFF_BTN)).click();
+        logger.info("Click on Add Staff button to open the Add staff popup");
+        return this;
+    }
+
+    public StaffPage clickOnTheEditIcon() {
+        wait.until(ExpectedConditions.elementToBeClickable(EDIT_ICON)).click();
+        logger.info("Click on the Edit icon to open the Edit staff popup");
+        staffMail = wait.until(ExpectedConditions.visibilityOf(STAFF_MAIL_VALUE)).getText().replace("@qa.team","");
+        logger.info("Staff Mail is: %s".formatted(staffMail));
+        return this;
+    }
+
+    public StaffPage clickOnTheDeleteIcon() throws IOException {
+        wait.until(ExpectedConditions.elementToBeClickable(DELETE_ICON));
+        boolean key = true;
+        while (key) {
+            try {
+                if (!DELETE_ICON.isDisplayed()) {
+                    key = false;
+                }
+                wait.until(ExpectedConditions.elementToBeClickable(DELETE_ICON)).click();
+                clickOnTheOKBtn();
+            } catch (StaleElementReferenceException ex) {
+                wait.until(ExpectedConditions.elementToBeClickable(DELETE_ICON)).click();
+                clickOnTheOKBtn();
+            }
+            verifyDeleteStaffSuccessfully();
+        }
+        return this;
+    }
+
+    public void clickOnTheOKBtn() {
+        wait.until(ExpectedConditions.elementToBeClickable(OK_BTN)).click();
+    }
+
     public StaffPage inputStaffName(String staffName) {
-        wait.until(ExpectedConditions.elementToBeClickable(STAFF_NAME)).sendKeys(staffName);
+        wait.until(ExpectedConditions.elementToBeClickable(STAFF_NAME)).clear();
+        STAFF_NAME.sendKeys(staffName);
         logger.info("Input the staff name: %s".formatted(staffName));
         return this;
     }
@@ -49,32 +91,53 @@ public class StaffPage extends StaffVerify {
 
     public StaffPage selectStaffPermission(List<Integer> roleList) {
         for (Integer role : roleList) {
-            if (role < STAFF_PERMISSIONS.size()) {
-                wait.until(ExpectedConditions.elementToBeClickable(STAFF_PERMISSIONS.get(role))).click();
+            if ((role < STAFF_PERMISSIONS_LABEL.size())) {
+                if ((role == 12) || (role == 13)) {
+                    if (!STAFF_PERMISSIONS_CHECKBOX.get(0).isSelected()) {
+                        STAFF_PERMISSIONS_LABEL.get(0).click();
+                        logger.info("Add %s role to new staff".formatted(new RoleMatrix().staffRoleText().get(0)));
+                    }
+                }
+                wait.until(ExpectedConditions.elementToBeClickable(STAFF_PERMISSIONS_LABEL.get(role))).click();
                 logger.info("Add %s role to new staff".formatted(new RoleMatrix().staffRoleText().get(role)));
+
             }
         }
         return this;
     }
 
+    public StaffPage deselectedAllStaffPermissions() {
+        for (var i = 0; i < STAFF_PERMISSIONS_CHECKBOX.size(); i++) {
+            if (STAFF_PERMISSIONS_CHECKBOX.get(i).isSelected()) {
+                STAFF_PERMISSIONS_LABEL.get(i).click();
+            }
+        }
+        logger.info("Deselect all permissions");
+        return this;
+    }
+
+    public StaffPage deselectAllBranch() {
+        for (int i = 0; i < STAFF_BRANCH_CHECKBOX.size(); i++) {
+            if (STAFF_BRANCH_CHECKBOX.get(i).isSelected()) {
+                STAFF_BRANCH_LABEL.get(i).click();
+            }
+        }
+        logger.info("Deselect all branch");
+        return this;
+    }
+
     public StaffPage selectBranch(List<Integer> branchList) {
         for (Integer branch : branchList) {
-            wait.until(ExpectedConditions.elementToBeClickable(STAFF_BRANCH.get(branch))).click();
-            logger.info("Assign %s branch to new staff". formatted(STAFF_BRANCH.get(branch).getText()));
+            wait.until(ExpectedConditions.elementToBeClickable(STAFF_BRANCH_LABEL.get(branch))).click();
+            logger.info("Assign %s branch to new staff".formatted(STAFF_BRANCH_LABEL.get(branch).getText()));
         }
         return this;
     }
 
-    public StaffPage clickDoneBtn() {
+    public StaffPage clickDoneBtn() throws IOException {
         wait.until(ExpectedConditions.elementToBeClickable(DONE_BTN)).click();
         logger.info("Click on the Done button to complete create new staff");
+        new Screenshot().takeScreenshot(driver);
         return this;
-    }
-
-    public void logoutSellerAccount() throws InterruptedException {
-        driver.get(DOMAIN);
-        sleep(3000);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click()", LOGOUT_BTN);
-        logger.info("Logout seller account to login staff account and verify staff permission");
     }
 }

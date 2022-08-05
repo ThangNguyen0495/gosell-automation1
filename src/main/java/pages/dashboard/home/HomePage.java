@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.UICommonAction;
 
@@ -30,12 +31,14 @@ public class HomePage {
     WebElement LOGOUT_BTN;
     
     @FindBy (css = ".loading .lds-dual-ring-grey")
-    WebElement SPINNER;    
+    WebElement SPINNER;
+
+    @FindBy (css = "a[name $=settings]")
+    WebElement SETTINGS_MENU;
     
-    public HomePage goToSevices(){
+    public void goToSevices(){
         commons.clickElement(SERVICES_LINK);
         logger.info("Click on service item on menu");
-        return this;
     }
 
     public HomePage waitTillSpinnerDisappear(){
@@ -44,10 +47,13 @@ public class HomePage {
         return this;
     }
     
-    public HomePage clickLogout(){
+    public void clickLogout(){
         commons.clickElement(LOGOUT_BTN);
         logger.info("Clicked on Logout linktext");
-        return this;
-    }    
+    }
+
+    public void navigateToSettingsPage() {
+        wait.until(ExpectedConditions.elementToBeClickable(SETTINGS_MENU)).click();
+    }
 
 }
