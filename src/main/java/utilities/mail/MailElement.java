@@ -19,5 +19,5 @@ public class MailElement {
     List<WebElement> MAIL_ELEMENT;
 
     @FindBy (css = "div.message_full")
-    WebElement PASSWORD;
+    List<WebElement> PASSWORD;
 }

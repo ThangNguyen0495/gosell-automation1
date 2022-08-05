@@ -2,6 +2,7 @@ package pages.dashboard.home;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,7 +54,8 @@ public class HomePage {
     }
 
     public void navigateToSettingsPage() {
-        wait.until(ExpectedConditions.elementToBeClickable(SETTINGS_MENU)).click();
+        wait.until(ExpectedConditions.visibilityOf(SETTINGS_MENU));
+        ((JavascriptExecutor)driver).executeScript("arguments[0].click()",SETTINGS_MENU);
     }
 
 }

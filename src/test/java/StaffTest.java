@@ -13,9 +13,9 @@ import static pages.dashboard.settings.staff_management.StaffPage.staffMail;
 public class StaffTest extends BaseTest {
     @Test
     public void Tcs01_createStaff() throws InterruptedException, IOException {
-        for (int i = 0; i < 1; i++) {
-            String staffName = "staff Test 2022/08/05_round2 %s".formatted(i);
-            String staffMail = "staff20220805r2%s@qa.team".formatted(i);
+        for (int i = 0; i < 15; i++) {
+            String staffName = "staff Test 2022/08/05_round4 %s".formatted(i);
+            String staffMail = "staff20220805r4%s@qa.team".formatted(i);
             List<Integer> staffRole = List.of(i);
             List<Integer> staffBranch = List.of(0);
 
@@ -54,11 +54,11 @@ public class StaffTest extends BaseTest {
     @Test
     public void Tcs02_EditTest() throws IOException, InterruptedException {
         for (int i = 0; i < 15; i++) {
-            String staffName = "staff Test 2022/08/05_round2 %s".formatted(i);
+            String staffName = "staff Test 2022/08/05_round4 %s".formatted(i);
             List<Integer> staffRole = List.of(i);
             List<Integer> staffBranch = List.of(0);
             new LoginPage(driver).navigate()
-                    .inputEmailOrPhoneNumber("stgaboned@nbobd.com")
+                    .inputEmailOrPhoneNumber("stgauto@nbobd.com")
                     .inputPassword("Abc@12345")
                     .clickLoginBtn();
 
@@ -77,7 +77,7 @@ public class StaffTest extends BaseTest {
             new LoginPage(driver).navigate()
                     .switchToStaffTab()
                     .inputEmailOrPhoneNumber(staffMail)
-                    .inputPassword(new MailPage(driver).openMail(staffMail).getPassword("You have been added as staff for"))
+                    .inputPassword(new MailPage(driver).openMail(staffMail.split("@qa.team")[0]).getPassword("You have been added as staff for"))
                     .clickLoginBtn();
 
             new StaffPage(driver).waitLoginPage()

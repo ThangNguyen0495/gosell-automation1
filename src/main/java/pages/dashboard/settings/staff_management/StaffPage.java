@@ -35,7 +35,7 @@ public class StaffPage extends StaffVerify {
     }
 
     public StaffPage waitLoginPage() throws InterruptedException {
-        sleep(3000);
+        sleep(5000);
         return this;
     }
 
