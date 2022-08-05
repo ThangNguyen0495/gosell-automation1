@@ -126,11 +126,11 @@ public class UICommonAction {
 		JavascriptExecutor jsExecutor =(JavascriptExecutor) driver;
 		jsExecutor.executeScript("arguments[0].setAttribute('value', '" + value + "')", element);
 	}
-	public void waitForElementInvisible(WebDriver driver, WebElement element){
+	public void waitForElementInvisible( WebElement element){
 		wait= new WebDriverWait(driver,Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.invisibilityOf(element));
 	}
-	public void waitForElementVisible(WebDriver driver, WebElement element){
+	public void waitForElementVisible( WebElement element){
 		wait= new WebDriverWait(driver,Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
