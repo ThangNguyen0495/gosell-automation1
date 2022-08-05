@@ -53,7 +53,7 @@ public class HeaderSF {
         Assert.assertEquals(searchSuggestionItem1_Title,fullName);
         logger.info("Verify name: %s display on search suggestion".formatted(fullName));
         String searchSuggestionItem1_Price = commons.getText(SEARCH_SUGGESTION_RESULT_PRICE.get(0));
-        Assert.assertEquals(String.join("",searchSuggestionItem1_Price.split(",")), price + "đ");
+        Assert.assertEquals(String.join("",searchSuggestionItem1_Price.split(",")), price);
         logger.info("Verify price: %s display on search suggestion".formatted(price));
         return this;
     }

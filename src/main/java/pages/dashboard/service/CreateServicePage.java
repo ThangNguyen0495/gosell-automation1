@@ -14,7 +14,9 @@ import utilities.UICommonAction;
 import utilities.data.DataGenerator;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CreateServicePage {
     WebDriver driver;
@@ -32,55 +34,42 @@ public class CreateServicePage {
     }
     @FindBy(xpath = "(//button[contains(@class,'btn-save')])[1]")
     WebElement SAVE_BTN;
-
     @FindBy(xpath = "//input[@name='serviceName']")
     WebElement SERVICE_NAME;
-
     @FindBy(xpath = "(//input[@inputmode='numeric'])[1]")
     WebElement LISTING_PRICE;
-
     @FindBy(xpath = "(//input[@inputmode='numeric'])[2]")
     WebElement SELLING_PRICE;
-
     @FindBy(xpath = "(//input[@type='checkbox'])[1]")
     WebElement SHOW_AS_LISTING_CBX_VALUE;
-
     @FindBy(xpath = "(//input[@type='checkbox'])[1]/following-sibling::div")
     WebElement SHOW_AS_LISTING_CBX_ACTION;
-
     @FindBy(xpath = " //div[@name='serviceDescription']//div[@class='fr-wrapper show-placeholder']/div")
     WebElement SERVICE_DESCRIPTION;
-
     @FindBy(css = ".product-form-collection-selector")
     WebElement COLLECTION_FORM;
-
-    @FindBy(xpath = "(//div[contains(@id,'react-select-2-option')])[1]")
-    WebElement COLLECTION_SUGGESTION_1;
-
+    @FindBy(xpath = "//div[contains(@id,'react-select-2-option')]")
+    List<WebElement> COLLECTION_SUGGESTION;
+    @FindBy(xpath = "//div[@class='product-form-collection-selector']//div[contains(@class,'multiValue')]/div[1]")
+    List<WebElement> SELECTED_COLLECTIONS;
     @FindBy(xpath = "//input[@type='file' and @style ='display: none;']")
     WebElement IMAGE_INPUT;
-
     @FindBy(css = "#locations")
     WebElement LOCATION;
-
     @FindBy(css = "#timeSlots")
     WebElement TIME_SLOTS;
-
     @FindBy (css ="#seoTitle")
     WebElement SEO_TITLE;
-
     @FindBy(css = "#seoDescription")
     WebElement SEO_DESCRIPTION;
-
     @FindBy(css = "#seoKeywords")
     WebElement SEO_KEYWORDS;
-
     @FindBy(css = "#seoUrl")
     WebElement SEO_URL;
-
     @FindBy(css = ".modal-body")
     WebElement POPUP_MESSAGE;
-
+    @FindBy(css = ".loading-screen .loading")
+    WebElement LOADING;
     public CreateServicePage inputServiceName(String serviceName){
         commons.inputText(SERVICE_NAME,serviceName);
         logger.info("Input "+serviceName+ " into Service name field");
@@ -98,7 +87,7 @@ public class CreateServicePage {
         int sellingPrice = listingPricePars - listingPricePars * Integer.parseInt(discountPercent)/100;
         commons.inputText(SELLING_PRICE,  String.valueOf(sellingPrice));
         logger.info("Input "+ String.valueOf(sellingPrice)+ " into Selling price field");
-        return String.valueOf(sellingPrice);
+        return String.valueOf(sellingPrice+"đ");
     }
     public CreateServicePage checkOnShowAsListingService(){
         commons.checkTheCheckBoxOrRadio(SHOW_AS_LISTING_CBX_VALUE,SHOW_AS_LISTING_CBX_ACTION);
@@ -115,12 +104,23 @@ public class CreateServicePage {
         logger.info("Input "+description+ " into description field");
         return this;
     }
-    public CreateServicePage inputCollections(){
-        commons.clickElement(COLLECTION_FORM);
-        logger.info("Click on collection form");
-        commons.clickElement(COLLECTION_SUGGESTION_1);
-        logger.info("Select collection 1");
+    public CreateServicePage inputCollections(int quantity ){
+        for (int i=0;i<quantity;i++) {
+            commons.clickElement(COLLECTION_FORM);
+            logger.info("Click on collection form");
+            commons.clickElement(COLLECTION_SUGGESTION.get(0));
+            logger.info("Select collection");
+        }
         return this;
+    }
+    public List<String>  getSelectedCollection(){
+        List<String> selectedCollections =   new ArrayList<>();
+
+        for (WebElement element:SELECTED_COLLECTIONS) {
+            selectedCollections.add(element.getText());
+        }
+        logger.debug("selectedCollections: "+selectedCollections);
+        return selectedCollections;
     }
     public CreateServicePage uploadImages(String...fileNames){
         commons.uploadMultipleFile(IMAGE_INPUT,"serviceimages",fileNames);
@@ -167,12 +167,12 @@ public class CreateServicePage {
         return this;
     }
 
-    public CreateServicePage verifyCreateSeviceSuccessfulMessage() {
+    public void verifyCreateSeviceSuccessfulMessage() {
         String message= commons.getText(POPUP_MESSAGE);
         Assert.assertEquals(message,"Sản phẩm được tạo thành công!");
         logger.info("Create service successfully popup is shown");
-        return this;
     }
+
 
 
 
