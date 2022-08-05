@@ -125,14 +125,14 @@ public class LoginPage {
         return this;
     }
 
-    public LoginPage performLoginWithFacebook(String username, String password) throws InterruptedException {
-    	String originalWindow = commonAction.getCurrentWindowHandle(driver);
+    public LoginPage performLoginWithFacebook(String username, String password) {
+    	String originalWindow = commonAction.getCurrentWindowHandle();
     	
     	clickFacebookBtn();
     	
-    	for (String windowHandle : commonAction.getAllWindowsHandles(driver)) {
+    	for (String windowHandle : commonAction.getAllWindowHandles()) {
     	    if(!originalWindow.contentEquals(windowHandle)) {
-    	        commonAction.switchToWindow(driver, windowHandle);
+    	        commonAction.switchToWindow(windowHandle);
     	        break;
     	    }
     	}
@@ -140,7 +140,7 @@ public class LoginPage {
     	inputFacebookUsername(username);
     	inputFacebookPassword(password);
     	clickFacebookLoginBtn();
-    	commonAction.switchToWindow(driver, originalWindow);
+    	commonAction.switchToWindow(originalWindow);
         return this;
     }      
     
