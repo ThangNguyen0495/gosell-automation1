@@ -8,14 +8,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
-
 import utilities.UICommonAction;
-
-import static utilities.links.Links.*;
 
 import java.time.Duration;
 import java.util.List;
+
+import static utilities.links.Links.*;
 
 public class LoginPage {
 	
@@ -63,6 +63,9 @@ public class LoginPage {
     
     @FindBy (css = "span.login-widget__tab:nth-child(2)")
     WebElement STAFF_TAB;
+
+    @FindBy (css = "div.modal-content")
+    WebElement WARNING_POPUP;
     
     public LoginPage navigate() {
         driver.get(DOMAIN + LOGIN_PATH);
@@ -116,7 +119,9 @@ public class LoginPage {
     	commonAction.clickElement(FACEBOOK_LOGIN_BTN);
     	logger.info("Clicked on Facebook Login button.");
         return this;
-    }    
+    }
+
+
     
     public LoginPage performLogin(String username, String password) {
     	inputEmailOrPhoneNumber(username);
@@ -163,6 +168,12 @@ public class LoginPage {
         soft.assertEquals(text,errMessage, "[Login][Invalid Email/Password] Message does not match.");
         logger.info("verifyEmailOrPasswordIncorrectError completed");
         return this;
+    }
+
+    public void verifyLoginWithDeletedStaffAccount(String content) {
+        wait.until(ExpectedConditions.visibilityOf(WARNING_POPUP));
+        Assert.assertTrue(WARNING_POPUP.getText().contains(content),
+                "[Login][Deleted Staff Account] No warning popup has been shown");
     }
 
     public void completeVerify() {

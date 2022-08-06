@@ -109,11 +109,12 @@ public class StaffVerify extends StaffElement {
         return this;
     }
 
-    public void completeVerify() {
+    public StaffVerify completeVerify() {
         logger.info("countFail = %s".formatted(countFail));
         if (countFail > 0) {
             Assert.fail("[Failed] Fail %d cases".formatted(countFail));
         }
+        return this;
     }
 
     public void logout() throws InterruptedException {

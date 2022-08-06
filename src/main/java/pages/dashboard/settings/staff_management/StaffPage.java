@@ -19,6 +19,7 @@ public class StaffPage extends StaffVerify {
 
     Logger logger = LogManager.getLogger(StaffPage.class);
     public static String staffMail;
+    static boolean isNull = false;
 
     public StaffPage(WebDriver driver) {
         super(driver);
@@ -31,6 +32,7 @@ public class StaffPage extends StaffVerify {
         logger.info("Title of Setting page is %s".formatted(driver.getTitle()));
         wait.until(ExpectedConditions.elementToBeClickable(STAFF_MANAGEMENT_MENU)).click();
         logger.info("Switch to Staff Management tab");
+        staffMail = wait.until(ExpectedConditions.visibilityOf(STAFF_MAIL_VALUE)).getText();
         return this;
     }
 
@@ -48,8 +50,6 @@ public class StaffPage extends StaffVerify {
     public StaffPage clickOnTheEditIcon() {
         wait.until(ExpectedConditions.elementToBeClickable(EDIT_ICON)).click();
         logger.info("Click on the Edit icon to open the Edit staff popup");
-        staffMail = wait.until(ExpectedConditions.visibilityOf(STAFF_MAIL_VALUE)).getText();
-        logger.info("Staff Mail is: %s".formatted(staffMail));
         return this;
     }
 
@@ -59,13 +59,19 @@ public class StaffPage extends StaffVerify {
         } catch (TimeoutException ex) {
             new Screenshot().takeScreenshot(driver);
             logger.error("Store no have staff");
+            isNull = true;
         }
         return this;
     }
 
     public StaffPage clickOnTheOKBtn() throws IOException {
-        new Screenshot().takeScreenshot(driver);
-        wait.until(ExpectedConditions.elementToBeClickable(OK_BTN)).click();
+        if (!isNull) {
+            new Screenshot().takeScreenshot(driver);
+            wait.until(ExpectedConditions.elementToBeClickable(OK_BTN)).click();
+            logger.info("Staff has been deleted");
+        } else {
+            logger.info("Delete staff - SKIPPED - No staff");
+        }
         return this;
     }
 

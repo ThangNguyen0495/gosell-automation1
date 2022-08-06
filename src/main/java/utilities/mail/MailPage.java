@@ -43,7 +43,6 @@ public class MailPage extends MailElement {
             if (MAIL_ELEMENT.get(i).getText().contains(subjectText)) {
                 wait.until(ExpectedConditions.visibilityOf(PASSWORD.get(i)));
                 password = PASSWORD.get(i).getText().split("Password :")[1].split("Log In at")[0];
-                System.out.println(password);
                 if (password.length() < 10) {
                     break;
                 }

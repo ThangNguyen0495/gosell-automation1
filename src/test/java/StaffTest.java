@@ -101,6 +101,14 @@ public class StaffTest extends BaseTest {
                 .clickOnTheDeleteIcon()
                 .clickOnTheOKBtn()
                 .verifyDeleteStaffSuccessfully()
-                .completeVerify();
+                .completeVerify()
+                .logout();
+
+        new LoginPage(driver).navigate()
+                .switchToStaffTab()
+                .inputEmailOrPhoneNumber(staffMail)
+                .inputPassword(new MailPage(driver).openMail(staffMail.split("@qa.team")[0]).getPassword("You have been added as staff for"))
+                .clickLoginBtn()
+                .verifyLoginWithDeletedStaffAccount("You're logged in with a non-staff account");
     }
 }
