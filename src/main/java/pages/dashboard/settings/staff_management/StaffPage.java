@@ -106,7 +106,7 @@ public class StaffPage extends StaffVerify {
     }
 
     public StaffPage deselectedAllStaffPermissions() {
-        for (var i = 0; i < STAFF_PERMISSIONS_CHECKBOX.size(); i++) {
+        for (var i = STAFF_PERMISSIONS_CHECKBOX.size() - 1; i >= 0; i--) {
             if (STAFF_PERMISSIONS_CHECKBOX.get(i).isSelected()) {
                 STAFF_PERMISSIONS_LABEL.get(i).click();
             }
