@@ -2,7 +2,7 @@ package pages.dashboard.settings.staff_management;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.dashboard.home.HomePage;
@@ -48,32 +48,25 @@ public class StaffPage extends StaffVerify {
     public StaffPage clickOnTheEditIcon() {
         wait.until(ExpectedConditions.elementToBeClickable(EDIT_ICON)).click();
         logger.info("Click on the Edit icon to open the Edit staff popup");
-        staffMail = wait.until(ExpectedConditions.visibilityOf(STAFF_MAIL_VALUE)).getText().replace("@qa.team","");
+        staffMail = wait.until(ExpectedConditions.visibilityOf(STAFF_MAIL_VALUE)).getText();
         logger.info("Staff Mail is: %s".formatted(staffMail));
         return this;
     }
 
     public StaffPage clickOnTheDeleteIcon() throws IOException {
-        wait.until(ExpectedConditions.elementToBeClickable(DELETE_ICON));
-        boolean key = true;
-        while (key) {
-            try {
-                if (!DELETE_ICON.isDisplayed()) {
-                    key = false;
-                }
-                wait.until(ExpectedConditions.elementToBeClickable(DELETE_ICON)).click();
-                clickOnTheOKBtn();
-            } catch (StaleElementReferenceException ex) {
-                wait.until(ExpectedConditions.elementToBeClickable(DELETE_ICON)).click();
-                clickOnTheOKBtn();
-            }
-            verifyDeleteStaffSuccessfully();
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(DELETE_ICON)).click();
+        } catch (TimeoutException ex) {
+            new Screenshot().takeScreenshot(driver);
+            logger.error("Store no have staff");
         }
         return this;
     }
 
-    public void clickOnTheOKBtn() {
+    public StaffPage clickOnTheOKBtn() throws IOException {
+        new Screenshot().takeScreenshot(driver);
         wait.until(ExpectedConditions.elementToBeClickable(OK_BTN)).click();
+        return this;
     }
 
     public StaffPage inputStaffName(String staffName) {

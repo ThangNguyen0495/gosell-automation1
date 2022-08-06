@@ -148,9 +148,9 @@ public class RoleMatrix {
         pagePath.put(19, "/reservation/list");
         pagePath.put(20, "/discounts/list");
         pagePath.put(21, "/flash-sale/list");
-        pagePath.put(22, "/all-customers/list");
-        pagePath.put(23, "/segments/list");
-        pagePath.put(24, "/setting/call-center");
+        pagePath.put(22, "/customers/all-customers/list");
+        pagePath.put(23, "/customers/segments/list");
+        pagePath.put(24, "/call-center/intro");
         pagePath.put(25, "/cashbook/management");
         pagePath.put(26, "/analytics/order");
         pagePath.put(27, "/analytics/reservation");

@@ -13,7 +13,7 @@ import static pages.dashboard.settings.staff_management.StaffPage.staffMail;
 public class StaffTest extends BaseTest {
     @Test
     public void Tcs01_createStaff() throws InterruptedException, IOException {
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 1; i++) {
             String staffName = "staff Test 2022/08/05_round4 %s".formatted(i);
             String staffMail = "staff20220805r4%s@qa.team".formatted(i);
             List<Integer> staffRole = List.of(i);
@@ -46,7 +46,6 @@ public class StaffTest extends BaseTest {
                     .logout();
 
             System.out.printf("-----END OF ROLE : %s -----%n", new RoleMatrix().staffRoleText().get(i));
-
         }
         new StaffVerify(driver).completeVerify();
     }
@@ -90,15 +89,18 @@ public class StaffTest extends BaseTest {
         new StaffVerify(driver).completeVerify();
     }
 
-//    @Test
-//    public void DeleteStaff() throws InterruptedException, IOException {
-//        new LoginPage(driver).navigate()
-//                .inputEmailOrPhoneNumber("stgaboned@nbobd.com")
-//                .inputPassword("Abc@12345")
-//                .clickLoginBtn();
-//
-//        new StaffPage(driver).waitLoginPage()
-//                .navigate()
-//                .clickOnTheDeleteIcon();
-//    }
+    @Test
+    public void Tc03_DeleteStaff() throws InterruptedException, IOException {
+        new LoginPage(driver).navigate()
+                .inputEmailOrPhoneNumber("stgauto@nbobd.com")
+                .inputPassword("Abc@12345")
+                .clickLoginBtn();
+
+        new StaffPage(driver).waitLoginPage()
+                .navigate()
+                .clickOnTheDeleteIcon()
+                .clickOnTheOKBtn()
+                .verifyDeleteStaffSuccessfully()
+                .completeVerify();
+    }
 }

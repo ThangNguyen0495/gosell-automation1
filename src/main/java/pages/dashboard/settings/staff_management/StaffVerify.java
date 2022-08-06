@@ -24,7 +24,8 @@ public class StaffVerify extends StaffElement {
 
     Logger logger = LogManager.getLogger(StaffVerify.class);
 
-    Integer countFail = 0;
+   static int countFail = 0;
+
 
     public StaffVerify(WebDriver driver) {
         super(driver);
@@ -102,12 +103,14 @@ public class StaffVerify extends StaffElement {
         return this;
     }
 
-    public void verifyDeleteStaffSuccessfully() throws IOException {
+    public StaffVerify verifyDeleteStaffSuccessfully() throws IOException {
         countFail = assertCustomize.assertEquals(countFail, wait.until(ExpectedConditions.visibilityOf(TOAST_MESSAGE)).getText(),
                 "Deleted successfully!", "[Delete Staff] Can not delete staff");
+        return this;
     }
 
     public void completeVerify() {
+        logger.info("countFail = %s".formatted(countFail));
         if (countFail > 0) {
             Assert.fail("[Failed] Fail %d cases".formatted(countFail));
         }
