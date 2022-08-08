@@ -1,6 +1,26 @@
 {
   "dashboard" : {
     "url" : "https://admin.unisell.vn",
+    "seller" : {
+      "mail" : {
+        "username" : "tienvan-staging-vn@mailnesia.com",
+        "password" : "fortesting!1"
+      },
+      "phone" : {
+        "username" : "0363530754",
+        "password" : "Abc@12345"
+      },
+      "facebook" : {
+        "username" : "trangthuy9662@gmail.com",
+        "password" : "123456aA@"
+      }
+    },
+    "staff" : {
+      "mail" : {
+        "username" : "etrelwitdi@mailnesia.com",
+        "password" : "uBMolFhj!1"
+      }
+    },
     "emptyError" : "Mục này không được để trống",
     "invalidMailFormat" : "Không đúng địa chỉ hộp thư",
     "invalidPhoneFormat" : "Số điện thoại không hợp lệ",
@@ -8,8 +28,19 @@
   },
   "storefront" : {
     "url" : "https://myshopvietnam.unisell.vn/",
-    "emptyUsername" : "Please input username",
-    "emptyPassword" : "Please input username",
-    "invalidCredentials" : "Muốn nói gì?"
+    "buyer" : {
+      "mail" : {
+        "username" : "buyertest@mailnesia.com",
+        "password" : "fortesting!4"
+      },
+      "phone" : {
+        "username" : "0856256079",
+        "password" : "12345678x@X"
+      }
+    },
+    "emptyUsernameError" : "Hãy nhập số điện thoại hoặc email",
+    "emptyPasswordError" : "Hãy nhập mật khẩu",
+    "invalidUsernameFormat" : "Số điện thoại hoặc email không đúng",
+    "invalidCredentials" : "Sai số điện thoại / email hoặc mật khẩu"
   }
 }
