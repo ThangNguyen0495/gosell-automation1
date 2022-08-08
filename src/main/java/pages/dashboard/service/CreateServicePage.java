@@ -147,7 +147,7 @@ public class CreateServicePage {
         return this;
     }
     public CreateServicePage inputSEODescription (String SEODesciption){
-        commons.inputText(SERVICE_DESCRIPTION, SEODesciption);
+        commons.inputText(SEO_DESCRIPTION, SEODesciption);
         logger.info("Input "+SEODesciption+ " into SEO description field");
         return this;
     }
@@ -172,6 +172,7 @@ public class CreateServicePage {
         Assert.assertEquals(message,"Sản phẩm được tạo thành công!");
         logger.info("Create service successfully popup is shown");
     }
+
 
 
 

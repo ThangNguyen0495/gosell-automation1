@@ -140,7 +140,7 @@ public class ServiceDetailPage {
         logger.info("Verify selling price and listing price not display");
         return this;
     }
-    public ServiceDetailPage verifySEOInfo(String SEOTitle, String SEODescription, String SEOKeyword, String SEOUrl, String serviceName, String serviceDescription){
+    public ServiceDetailPage verifySEOInfo(String SEOTitle, String SEODescription, String SEOKeyword, String serviceName,String serviceDescription){
         String titleActual = commons.getElementAttribute(META_TITLE,"content");
         if (SEOTitle==""){
             Assert.assertEquals(titleActual,serviceName);
@@ -158,10 +158,6 @@ public class ServiceDetailPage {
             Assert.assertEquals(SEOKeywordActual,serviceName);
         }else {
             Assert.assertEquals(SEOKeywordActual,SEOKeyword);
-        }
-        String urlActual = commons.getCurrentURL();
-        if (SEOUrl!=""){
-            Assert.assertEquals(urlActual,SEOUrl);
         }
         return this;
     }

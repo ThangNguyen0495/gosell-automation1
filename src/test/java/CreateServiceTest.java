@@ -38,7 +38,7 @@ public class CreateServiceTest extends BaseTest{
         login = new LoginPage(driver);
         login.navigate().performLogin("0703618433","Psso124@");
         home =  new HomePage(driver);
-        home.waitTillSpinnerDisappear().goToSevices();
+        home.waitTillSpinnerDisappear().navigateToPage("Services");
         serviceManagement = new ServiceManagementPage(driver);
         serviceManagement.goToCreateServicePage();
         createService = new CreateServicePage(driver);
@@ -74,10 +74,10 @@ public class CreateServiceTest extends BaseTest{
                .verifyBookNowAndAddToCartButtonDisplay()
                .verifyServiceDescription(description)
                .verifyCollectionLink(selectedCollection.size(),selectedCollection)
-               .verifySEOInfo("","","","",serviceName,description)
+               .verifySEOInfo("","","",serviceName,description)
                .clickOnCollectionLink();
        collectionSFPage = new CollectionSFPage(driver);
-       collectionSFPage.verifyCollectionPageTitle(serviceName)
+       collectionSFPage.verifyCollectionPageTitle(selectedCollection.get(0))
                .verifyNewServiceDisplayInList(serviceName,sellingPrice,listingPrice);
    }
     @Test
@@ -85,7 +85,7 @@ public class CreateServiceTest extends BaseTest{
         login = new LoginPage(driver);
         login.navigate().performLogin("0703618433","Psso124@");
         home =  new HomePage(driver);
-        home.waitTillSpinnerDisappear().goToSevices();
+        home.waitTillSpinnerDisappear().navigateToPage("Services");
         serviceManagement = new ServiceManagementPage(driver);
         serviceManagement.goToCreateServicePage();
         createService = new CreateServicePage(driver);
@@ -120,7 +120,7 @@ public class CreateServiceTest extends BaseTest{
                 .verifyServiceDescription(description)
                 .clickOnCollectionLink();
         collectionSFPage = new CollectionSFPage(driver);
-        collectionSFPage.verifyCollectionPageTitle(serviceName)
+        collectionSFPage.verifyCollectionPageTitle(selectedCollection.get(0))
                 .verifyListingServiceDisplayInList(serviceName);
     }
     @Test
@@ -128,7 +128,7 @@ public class CreateServiceTest extends BaseTest{
         login = new LoginPage(driver);
         login.navigate().performLogin("0703618433","Psso124@");
         home =  new HomePage(driver);
-        home.waitTillSpinnerDisappear().goToSevices();
+        home.waitTillSpinnerDisappear().navigateToPage("Services");
         serviceManagement = new ServiceManagementPage(driver);
         serviceManagement.goToCreateServicePage();
         createService = new CreateServicePage(driver);
@@ -166,7 +166,7 @@ public class CreateServiceTest extends BaseTest{
                 .verifyCollectionLink(selectedCollection.size(),selectedCollection)
                 .clickOnCollectionLink();
         collectionSFPage = new CollectionSFPage(driver);
-        collectionSFPage.verifyCollectionPageTitle(serviceName)
+        collectionSFPage.verifyCollectionPageTitle("All Services")
                 .verifyNewServiceDisplayInList(serviceName,sellingPrice,listingPrice);
     }
     @Test
@@ -174,7 +174,7 @@ public class CreateServiceTest extends BaseTest{
         login = new LoginPage(driver);
         login.navigate().performLogin("0703618433","Psso124@");
         home =  new HomePage(driver);
-        home.waitTillSpinnerDisappear().goToSevices();
+        home.waitTillSpinnerDisappear().navigateToPage("Services");
         serviceManagement = new ServiceManagementPage(driver);
         serviceManagement.goToCreateServicePage();
         createService = new CreateServicePage(driver);
@@ -199,7 +199,7 @@ public class CreateServiceTest extends BaseTest{
                 .verifyCreateSeviceSuccessfulMessage();
     }
     @Test
-    public void CS02_VerifyServiceWithSEOInfoOnSF() throws IOException {
+    public void CS08_VerifyServiceWithSEOInfoOnSF() throws IOException {
         loginSF = new pages.storefront.LoginPage(driver);
         loginSF.navigate(SF_ShopVi);
         headerSF = new HeaderSF(driver);
@@ -215,10 +215,10 @@ public class CreateServiceTest extends BaseTest{
                 .verifyBookNowAndAddToCartButtonDisplay()
                 .verifyServiceDescription(description)
                 .verifyCollectionLink(selectedCollection.size(),selectedCollection)
-                .verifySEOInfo(SEOTitle,SEODesctiption,SEOKeyword,SEOUrl,serviceName,description)
+                .verifySEOInfo(SEOTitle,SEODesctiption,SEOKeyword,serviceName,description)
                 .clickOnCollectionLink();
         collectionSFPage = new CollectionSFPage(driver);
-        collectionSFPage.verifyCollectionPageTitle(serviceName)
+        collectionSFPage.verifyCollectionPageTitle(selectedCollection.get(0))
                 .verifyNewServiceDisplayInList(serviceName,sellingPrice,listingPrice);
     }
 }
