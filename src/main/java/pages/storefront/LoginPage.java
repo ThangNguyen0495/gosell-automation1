@@ -15,7 +15,6 @@ import utilities.UICommonAction;
 import static utilities.links.Links.*;
 
 import java.time.Duration;
-import java.util.List;
 
 public class LoginPage {
 	
@@ -37,25 +36,45 @@ public class LoginPage {
     @FindBy(css = ".navbar-brand.nav-link")
     WebElement USER_INFO_ICON;
     
-    @FindBy(css = "#btn-login")
+    @FindBy(id = "btn-login")
     WebElement LOGIN_ICON;
     
-    @FindBy(css = "#login-username")
+    @FindBy(id = "login-username")
     WebElement USERNAME;
+    
+    @FindBy (id = "login-password")
+    WebElement PASSWORD;    
 
-    @FindBy (css = "#login-password")
-    WebElement PASSWORD;
+    @FindBy (id = "open-forgot-pwd")
+    WebElement FORGOT_PASSWORD;       
+    
+    @FindBy(id = "forgot-pwd-username")
+    WebElement USERNAME_FORGOT_TXTBOX; 
+    
+    @FindBy(id = "verify-password")
+    WebElement PASSWORD_FORGOT_TXTBOX;
 
+    @FindBy (css = "#frm-forgot-pwd .btn-submit")
+    WebElement CONTINUE_BTN;    
+    
+    @FindBy (css = "#frm-verify .btn-submit")
+    WebElement CONFIRM_BTN;    
+
+    @FindBy (id = "verify-code")
+    WebElement VERIFICATION_CODE;       
+    
     @FindBy (xpath = "(//button[@class='btn btn-primary btn-block btn-submit'])[1]")
     WebElement LOGIN_BTN;
 
-    @FindBy (css = ".error + .error")
-    List<WebElement> USER_PASSWORD_ERROR;
+    @FindBy (id = "login-username-error")
+    WebElement USER_ERROR;
 
-    @FindBy (css = "#login-fail")
+    @FindBy (id = "login-password-error")
+    WebElement PASSWORD_ERROR;    
+
+    @FindBy (id = "login-fail")
     WebElement INVALID_USER_ERROR;	
-	
-
+    
     public LoginPage navigate() {
         driver.get(DOMAIN1);
         wait.until(ExpectedConditions.titleIs(LOGIN_PAGE_TITLE1));
@@ -89,14 +108,26 @@ public class LoginPage {
     	commonAction.inputText(PASSWORD, password);
     	logger.info("Input '" + password + "' into Password field.");
         return this;
+    }    
+
+    public LoginPage inputUsernameForgot(String username) {
+    	commonAction.inputText(USERNAME_FORGOT_TXTBOX, username);
+    	logger.info("Input '" + username + "' into Username field to get a new password.");
+        return this;
     }
 
+    public LoginPage inputPasswordForgot(String password) {
+    	commonAction.inputText(PASSWORD_FORGOT_TXTBOX, password);
+    	logger.info("Input '" + password + "' into Password field to get a new password.");
+        return this;
+    }    
+    
     public LoginPage clickLoginBtn() {
     	commonAction.clickElement(LOGIN_BTN);
     	logger.info("Clicked on Login button.");
         return this;
     }
-    
+
     public LoginPage performLogin(String username, String password) {
     	clickUserInfoIcon();
     	clickLoginIcon();
@@ -105,5 +136,54 @@ public class LoginPage {
     	clickLoginBtn();
         return this;
     }
-   
+
+    public LoginPage clickForgotPassword() {
+    	commonAction.clickElement(FORGOT_PASSWORD);
+    	logger.info("Clicked on Forgot Password linktext.");
+    	return this;
+    }    
+
+    public LoginPage clickContinueBtn() {
+    	commonAction.clickElement(CONTINUE_BTN);
+    	logger.info("Clicked on Continue button.");
+    	return this;
+    }    
+    
+    public LoginPage clickConfirmBtn() {
+    	commonAction.clickElement(CONFIRM_BTN);
+    	logger.info("Clicked on Confirm button.");
+    	return this;
+    }    
+
+    public LoginPage inputVerificationCode(String verificationCode) {
+    	commonAction.inputText(VERIFICATION_CODE, verificationCode);
+    	logger.info("Input '" + verificationCode + "' into Verification Code field.");
+        return this;
+    }   
+    
+    public LoginPage verifyEmailOrPhoneNumberError(String errMessage) {
+        String text = commonAction.getText(USER_ERROR);
+        soft.assertEquals(text, errMessage, "[Login][Email or Phone Number] Message does not match.");
+        logger.info("verifyEmailOrPhoneNumberError completed");
+        return this;
+    }
+
+    public LoginPage verifyPasswordError(String errMessage) {
+        String text = commonAction.getText(PASSWORD_ERROR);
+        soft.assertEquals(text,errMessage, "[Login][Password] Message does not match.");
+        logger.info("verifyPasswordError completed");
+        return this;
+    }
+
+    public LoginPage verifyEmailOrPasswordIncorrectError(String errMessage) {
+        String text = commonAction.getText(INVALID_USER_ERROR);
+        soft.assertEquals(text,errMessage, "[Login][Invalid Email/Password] Message does not match.");
+        logger.info("verifyEmailOrPasswordIncorrectError completed");
+        return this;
+    }    
+  
+    public void completeVerify() {
+        soft.assertAll();
+    }    
+    
 }

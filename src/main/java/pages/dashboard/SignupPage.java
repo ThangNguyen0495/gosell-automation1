@@ -50,6 +50,27 @@ public class SignupPage {
 
     @FindBy (css = "div.uik-select__valueRenderedWrapper")
     WebElement COUNTRY_DROPDOWN;
+    
+    @FindBy (id = "nameStore")
+    WebElement STORE_NAME;
+    
+    @FindBy (id = "contactNumber")
+    WebElement STORE_PHONE;
+    
+    @FindBy (id = "pickupAddress")
+    WebElement PICKUP_ADDRESS;
+    
+    @FindBy (id = "pickupAddress2")
+    WebElement SECOND_PICKUP_ADDRESS;
+    
+    @FindBy (id = "countryCode")
+    WebElement COUNTRY_DROPDOWN_SETUP_SHOP;
+    
+    @FindBy (id = "currencyCode")
+    WebElement CURRENCY;
+    
+    @FindBy (id = "country")
+    WebElement STORE_LANGUAGE;
 
     @FindBy (css = "button.uik-select__option>span>div>div>div>div:nth-child(1)")
     List<WebElement> COUNTRY_LIST;
@@ -75,6 +96,50 @@ public class SignupPage {
     	return this;
     }
 
+    public SignupPage selectCountryToSetUpShop(String country) {
+    	String selectedOption = commonAction.selectByVisibleText(COUNTRY_DROPDOWN_SETUP_SHOP, country);
+    	logger.info("Selected country: " + selectedOption);
+    	return this;
+    }
+    
+    public SignupPage selectCurrency(String currency) {
+    	String selectedOption = commonAction.selectByVisibleText(CURRENCY, currency);
+    	logger.info("Selected currency: " + selectedOption);
+    	return this;
+    }
+    
+    public SignupPage selectLanguage(String language) {
+    	String selectedOption = commonAction.selectByVisibleText(STORE_LANGUAGE, language);
+    	logger.info("Selected language: " + selectedOption);
+    	return this;
+    }
+    
+    public SignupPage inputStoreName(String storeName) {
+    	commonAction.inputText(STORE_NAME, storeName);
+    	logger.info("Input '" + storeName + "' into Store Name field.");
+    	return this;
+    }
+    
+    public SignupPage inputStorePhone(String phone) {
+    	commonAction.inputText(STORE_PHONE, phone);
+    	logger.info("Input '" + phone + "' into Phone field.");
+    	return this;
+    }
+    
+    public SignupPage inputPickupAddress(String address) {
+    	commonAction.inputText(PICKUP_ADDRESS, address);
+    	logger.info("Input '" + address + "' into Pickup Address field.");
+    	return this;
+    }
+    
+    public SignupPage inputSecondPickupAddress(String address) {
+    	commonAction.inputText(SECOND_PICKUP_ADDRESS, address);
+    	logger.info("Input '" + address + "' into Second Pickup Address field.");
+    	return this;
+    }
+    
+    
+    
     public SignupPage inputMailOrPhoneNumber(String user) {
     	commonAction.inputText(USERNAME, user);
     	logger.info("Input '" + user + "' into Username field.");

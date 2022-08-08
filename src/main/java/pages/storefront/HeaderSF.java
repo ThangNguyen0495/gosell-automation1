@@ -39,6 +39,9 @@ public class HeaderSF {
     @FindBy(xpath = "//strong[contains(@class,'search-result-item-price')]")
     List<WebElement> SEARCH_SUGGESTION_RESULT_PRICE;
 
+    @FindBy (id = "btn-logout")
+    WebElement LOGOUT_BTN;    
+    
     public HeaderSF searchWithFullName(String fullName){
         commons.clickElement(SEARCH_FIELD_TO_CLICK);
         logger.info("Click on Search bar");
@@ -63,4 +66,9 @@ public class HeaderSF {
         return this;
     }
 
+    public void clickLogout(){
+        commons.clickElement(LOGOUT_BTN);
+        logger.info("Clicked on Logout linktext");
+    }    
+    
 }

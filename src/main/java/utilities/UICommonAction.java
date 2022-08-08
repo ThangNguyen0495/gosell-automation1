@@ -10,7 +10,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import java.io.File;
 import java.time.Duration;
@@ -165,5 +164,12 @@ public class UICommonAction {
 		return driver.getCurrentUrl();
 	}
 
+	public String selectByVisibleText(WebElement element, String visibleText) {
+		wait.until(ExpectedConditions.elementToBeClickable(element));
+		Select select = new Select(element);
+		select.selectByVisibleText(visibleText);
+		WebElement option = select.getFirstSelectedOption();
+		return option.getText();
+	}	
 
 }
