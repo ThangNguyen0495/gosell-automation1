@@ -63,6 +63,9 @@ public class SignupPage {
     @FindBy (id = "contactNumber")
     WebElement STORE_PHONE;
     
+    @FindBy (id = "email")
+    WebElement STORE_MAIL;
+    
     @FindBy (id = "pickupAddress")
     WebElement PICKUP_ADDRESS;
     
@@ -148,6 +151,12 @@ public class SignupPage {
     public SignupPage inputStorePhone(String phone) {
     	commonAction.inputText(STORE_PHONE, phone);
     	logger.info("Input '" + phone + "' into Phone field.");
+    	return this;
+    }
+    
+    public SignupPage inputStoreMail(String mail) {
+    	commonAction.inputText(STORE_MAIL, mail);
+    	logger.info("Input '" + mail + "' into Phone field.");
     	return this;
     }
     

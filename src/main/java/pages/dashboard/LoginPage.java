@@ -13,7 +13,6 @@ import org.testng.asserts.SoftAssert;
 import utilities.UICommonAction;
 
 import java.time.Duration;
-import java.util.List;
 
 import static utilities.links.Links.*;
 
@@ -156,6 +155,14 @@ public class LoginPage {
     	inputPassword(password);
     	clickLoginBtn();
         return this;
+    }
+    
+    public LoginPage performLogin(String country, String username, String password) {
+    	new SignupPage(driver).selectCountry(country);
+    	inputEmailOrPhoneNumber(username);
+    	inputPassword(password);
+    	clickLoginBtn();
+    	return this;
     }
 
     public LoginPage performLoginWithFacebook(String username, String password) {
