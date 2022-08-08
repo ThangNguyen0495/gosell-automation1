@@ -44,7 +44,11 @@ public class InitWebdriver {
                 }
             }
         }
-        driver.manage().window().setSize(new Dimension(1920,1080));
+        if (headless.equals("true")) {
+            driver.manage().window().setSize(new Dimension(1920, 1080));
+        } else {
+            driver.manage().window().maximize();
+        }
         return driver;
     }
 }
