@@ -172,4 +172,10 @@ public class UICommonAction {
 		return option.getText();
 	}	
 
+	// Useful to hide the facebook message bubble at dashboard login page
+	public void hideElement(WebElement element) {
+		String js = "arguments[0].style.display='none';";
+		((JavascriptExecutor) driver).executeScript(js, element);
+	}	
+	
 }
