@@ -34,8 +34,9 @@ public class Mailnesia {
     @FindBy(xpath = "//tr[@class=\"emailheader\"][1]/td[4]")
     WebElement EMAIL;
     
-    public Mailnesia navigate(String user) {
-        driver.get("https://mailnesia.com/mailbox/" + user);
+    public Mailnesia navigate(String mail) {
+    	String name = mail.split("@")[0];
+        driver.get("https://mailnesia.com/mailbox/" + name);
         return this;
     }
 
