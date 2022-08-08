@@ -21,8 +21,18 @@ public class StaffPage extends StaffVerify {
     public static String staffMail;
     static boolean isNull = false;
 
+
     public StaffPage(WebDriver driver) {
         super(driver);
+    }
+
+    public StaffPage setFileName(String fileName) {
+        StaffVerify.fileName = fileName;
+        return this;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 
     public StaffPage navigate() throws InterruptedException {
@@ -88,17 +98,18 @@ public class StaffPage extends StaffVerify {
         return this;
     }
 
-    public StaffPage selectStaffPermission(List<Integer> roleList) {
+    public StaffPage selectStaffPermission(List<Integer> roleList) throws IOException {
         for (Integer role : roleList) {
             if ((role < STAFF_PERMISSIONS_LABEL.size())) {
+                System.out.println(STAFF_PERMISSIONS_LABEL.size());
                 if ((role == 12) || (role == 13)) {
                     if (!STAFF_PERMISSIONS_CHECKBOX.get(0).isSelected()) {
                         STAFF_PERMISSIONS_LABEL.get(0).click();
-                        logger.info("Add %s role to new staff".formatted(new RoleMatrix().staffRoleText().get(0)));
+                        logger.info("Add %s role to new staff".formatted(new RoleMatrix().permissionText(getFileName()).get(0)));
                     }
                 }
                 wait.until(ExpectedConditions.elementToBeClickable(STAFF_PERMISSIONS_LABEL.get(role))).click();
-                logger.info("Add %s role to new staff".formatted(new RoleMatrix().staffRoleText().get(role)));
+                logger.info("Add %s role to new staff".formatted(new RoleMatrix().permissionText(getFileName()).get(role)));
 
             }
         }

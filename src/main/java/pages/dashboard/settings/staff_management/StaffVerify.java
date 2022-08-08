@@ -24,7 +24,8 @@ public class StaffVerify extends StaffElement {
 
     Logger logger = LogManager.getLogger(StaffVerify.class);
 
-   static int countFail = 0;
+    static int countFail = 0;
+    static String fileName;
 
 
     public StaffVerify(WebDriver driver) {
@@ -49,7 +50,7 @@ public class StaffVerify extends StaffElement {
         logger.info("Access to %s page".formatted(title));
         sleep(1000);
         countFail = assertCustomize.assertEquals(countFail, driver.getCurrentUrl().replace("/intro", ""),
-                DOMAIN + path.replace("/intro",""), "[URL] %s page is not displayed.".formatted(title));
+                DOMAIN + path.replace("/intro", ""), "[URL] %s page is not displayed.".formatted(title));
         logger.info(("Verify that current URL is: %s").formatted(DOMAIN + path));
         countFail = assertCustomize.assertEquals(countFail, driver.getTitle(), title, "[Title] %s title does not match.".formatted(title));
         logger.info("Verify that page should be %s".formatted(title));
@@ -65,14 +66,14 @@ public class StaffVerify extends StaffElement {
         return list;
     }
 
-    public List<Integer> mixRoleList(List<Integer> roleList) {
+    public List<Integer> mixRoleList(List<Integer> roleList) throws IOException {
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < new RoleMatrix().staffRoleEncode().get(0).size(); i++) {
+        for (int i = 0; i < new RoleMatrix().staffPermissions(new StaffPage(driver).getFileName()).get(0).size(); i++) {
             list.add(0);
         }
         for (int role : roleList) {
             for (int i = 0; i < list.size(); i++) {
-                list.set(i, list.get(i) + new RoleMatrix().staffRoleEncode().get(role).get(i));
+                list.set(i, list.get(i) + new RoleMatrix().staffPermissions(new StaffPage(driver).getFileName()).get(role).get(i));
             }
         }
         return list;
@@ -114,6 +115,7 @@ public class StaffVerify extends StaffElement {
         if (countFail > 0) {
             Assert.fail("[Failed] Fail %d cases".formatted(countFail));
         }
+        countFail = 0;
         return this;
     }
 

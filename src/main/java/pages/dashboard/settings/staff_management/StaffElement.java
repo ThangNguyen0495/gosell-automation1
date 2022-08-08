@@ -30,13 +30,13 @@ public class StaffElement {
     @FindBy (css = "tr:nth-child(2)>td>div>div.staff__email.gsa__color--gray")
     WebElement STAFF_MAIL_VALUE;
 
-    @FindBy (css = "input[id ^= checkbox-permissionCode]")
+    @FindBy (css = "div.permission__body > fieldset > div > div > div > div > input")
     List<WebElement> STAFF_PERMISSIONS_CHECKBOX;
 
     @FindBy (css = "div.permission__body > fieldset > div > div > div > div > label")
     List<WebElement> STAFF_PERMISSIONS_LABEL;
 
-    @FindBy (css = "input[id^=checkbox-branchId]")
+    @FindBy (css = "div.branch__body > fieldset > div > div > div > div > input")
     List<WebElement> STAFF_BRANCH_CHECKBOX;
 
     @FindBy (css = "div.branch__body > fieldset > div > div > div > div > label")

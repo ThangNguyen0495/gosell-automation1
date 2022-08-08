@@ -11,21 +11,26 @@ import java.util.List;
 import static pages.dashboard.settings.staff_management.StaffPage.staffMail;
 
 public class StaffTest extends BaseTest {
+    String fileName = "staffRoleMatrix.xlsx";
+    String sellerAccount = "stgauto@nbobd.com";
+    String sellerPassword = "Abc@12345";
+
     @Test
     public void Tcs01_createStaff() throws InterruptedException, IOException {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 12; i < 15; i++) {
             String staffName = "staff Test 2022/08/05_round4 %s".formatted(i);
-            String staffMail = "staff20220805r4%s@qa.team".formatted(i);
+            String staffMail = "staff20220808r4%s@qa.team".formatted(i);
             List<Integer> staffRole = List.of(i);
             List<Integer> staffBranch = List.of(0);
 
             new LoginPage(driver).navigate()
-                    .inputEmailOrPhoneNumber("stgauto@nbobd.com")
-                    .inputPassword("Abc@12345")
+                    .inputEmailOrPhoneNumber(sellerAccount)
+                    .inputPassword(sellerPassword)
                     .clickLoginBtn();
 
             new StaffPage(driver).waitLoginPage()
                     .navigate()
+                    .setFileName(fileName)
                     .clickOnTheAddStaffBtn()
                     .inputStaffName(staffName)
                     .inputStaffMail(staffMail)
@@ -45,24 +50,25 @@ public class StaffTest extends BaseTest {
                     .verifyPermissionOfStaff(staffRole)
                     .logout();
 
-            System.out.printf("-----END OF ROLE : %s -----%n", new RoleMatrix().staffRoleText().get(i));
+            System.out.printf("-----END OF ROLE : %s -----%n", new RoleMatrix().permissionText(fileName).get(i));
         }
         new StaffVerify(driver).completeVerify();
     }
 
     @Test
     public void Tcs02_EditTest() throws IOException, InterruptedException {
-        for (int i = 0; i < 15; i++) {
-            String staffName = "staff Test 2022/08/05_round4 %s".formatted(i);
+        for (int i = 12; i < 15; i++) {
+            String staffName = "staff Test 2022/08/08_round4 %s".formatted(i);
             List<Integer> staffRole = List.of(i);
             List<Integer> staffBranch = List.of(0);
             new LoginPage(driver).navigate()
-                    .inputEmailOrPhoneNumber("stgauto@nbobd.com")
-                    .inputPassword("Abc@12345")
+                    .inputEmailOrPhoneNumber(sellerAccount)
+                    .inputPassword(sellerPassword)
                     .clickLoginBtn();
 
             new StaffPage(driver).waitLoginPage()
                     .navigate()
+                    .setFileName(fileName)
                     .clickOnTheEditIcon()
                     .inputStaffName(staffName)
                     .deselectedAllStaffPermissions()
@@ -83,17 +89,17 @@ public class StaffTest extends BaseTest {
                     .verifyPermissionOfStaff(staffRole)
                     .logout();
 
-            System.out.printf("-----END OF ROLE : %s -----%n", new RoleMatrix().staffRoleText().get(i));
+            System.out.printf("-----END OF ROLE : %s -----%n", new RoleMatrix().permissionText(fileName).get(i));
 
         }
         new StaffVerify(driver).completeVerify();
     }
 
     @Test
-    public void Tc03_DeleteStaff() throws InterruptedException, IOException {
+    public void Tcs03_DeleteStaff() throws InterruptedException, IOException {
         new LoginPage(driver).navigate()
-                .inputEmailOrPhoneNumber("stgauto@nbobd.com")
-                .inputPassword("Abc@12345")
+                .inputEmailOrPhoneNumber(sellerAccount)
+                .inputPassword(sellerPassword)
                 .clickLoginBtn();
 
         new StaffPage(driver).waitLoginPage()
