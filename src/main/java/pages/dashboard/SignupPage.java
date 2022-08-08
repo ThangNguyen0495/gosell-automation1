@@ -44,6 +44,12 @@ public class SignupPage {
 
     @FindBy (css = "button.uik-btn__iconRight")
     WebElement SIGNUP_BTN;
+    
+    @FindBy (css = ".btn-next")
+    WebElement COMPLETE_BTN;
+    
+    @FindBy (css = ".wizard-layout__content a")
+    WebElement LOGOUT;
 
     @FindBy (css = "div.uik-select__valueWrapper>div>div:nth-child(2)")
     WebElement COUNTRY_CODE;
@@ -66,6 +72,22 @@ public class SignupPage {
     @FindBy (id = "countryCode")
     WebElement COUNTRY_DROPDOWN_SETUP_SHOP;
     
+    @FindBy (id = "cityName")
+    WebElement CITY;
+    
+    @FindBy (id = "cityCode")
+    WebElement CITYCODE_DROPDOWN;
+    
+    @FindBy (id = "districtCode")
+    WebElement DISTRICT_DROPDOWN;
+    
+    @FindBy (id = "wardCode")
+    WebElement WARD;
+    
+    @FindBy (id = "zipCode")
+    WebElement ZIPCODE;
+    
+    
     @FindBy (id = "currencyCode")
     WebElement CURRENCY;
     
@@ -83,6 +105,9 @@ public class SignupPage {
 
     @FindBy (css = ".resend-otp")
     WebElement RESEND_OTP;    
+    
+    @FindBy (id = "fb-root")
+    WebElement FACEBOOK_BUBBLE;    
     
     public SignupPage navigate() {
         driver.get(DOMAIN + SIGNUP_PATH);
@@ -138,7 +163,49 @@ public class SignupPage {
     	return this;
     }
     
+    public SignupPage inputCity(String city) {
+    	commonAction.inputText(CITY, city);
+    	logger.info("Input '" + city + "' into City field.");
+        return this;
+    }     
     
+    public SignupPage selectCityCode(String cityCode) {
+    	String selectedOption = commonAction.selectByVisibleText(CITYCODE_DROPDOWN, cityCode);
+    	logger.info("Selected city code: " + selectedOption);
+    	return this;
+    }
+    
+    public SignupPage selectDistrict(String district) {
+    	String selectedOption = commonAction.selectByVisibleText(DISTRICT_DROPDOWN, district);
+    	logger.info("Selected district: " + selectedOption);
+    	return this;
+    }
+
+    public SignupPage selectWard(String ward) {
+    	String selectedOption = commonAction.selectByVisibleText(WARD, ward);
+    	logger.info("Selected ward: " + selectedOption);
+    	return this;
+    }        
+    
+    public SignupPage inputZipCode(String zipCode) {
+    	commonAction.inputText(ZIPCODE, zipCode);
+    	logger.info("Input '" + zipCode + "' into Zipcode field.");
+        return this;
+    }   
+    
+    public SignupPage clickCompleteBtn() {
+    	commonAction.hideElement(FACEBOOK_BUBBLE);
+    	logger.info("Hid Facebook bubble."); 
+    	commonAction.clickElement(COMPLETE_BTN);
+    	logger.info("Clicked on Complete button.");
+    	return this;
+    }
+    
+    public SignupPage clickLogout() {
+    	commonAction.clickElement(LOGOUT);
+    	logger.info("Clicked on Logout linktext.");        
+    	return this;
+    }
     
     public SignupPage inputMailOrPhoneNumber(String user) {
     	commonAction.inputText(USERNAME, user);
