@@ -40,6 +40,9 @@ public class HomePage {
 
     @FindBy(css = "div.language-selector > button > span > div >div > span")
     WebElement LANGUAGE;
+    
+    @FindBy(css = ".modal-content .gs-button")
+    WebElement UPGRADNOW_BTN;
 
     public void goToSevices() {
         commons.clickElement(SERVICES_LINK);
@@ -66,4 +69,9 @@ public class HomePage {
         return wait.until(ExpectedConditions.visibilityOf(LANGUAGE)).getText().replace(" ", "");
     }
 
+    public void clickUpgradeNow() {
+        commons.clickElement(UPGRADNOW_BTN);
+        logger.info("Clicked on Upgrade Now button");
+    }    
+    
 }
