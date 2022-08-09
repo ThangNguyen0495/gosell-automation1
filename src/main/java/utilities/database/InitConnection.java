@@ -1,32 +1,46 @@
 package utilities.database;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
+
+import pages.dashboard.SignupPage;
 
 import java.sql.*;
 
 import static utilities.account.AccountTest.*;
 
 public class InitConnection {
+	
+	final static Logger logger = LogManager.getLogger(SignupPage.class);
+	
     public java.sql.Connection createConnection() throws SQLException {
         String connectionUrl = "jdbc:postgresql://%s:%s/%s?user=%s&password=%s&loginTimeout=30".formatted(DB_HOST, DB_PORT, DB_DATABASE, DB_USER, DB_PASS);
         return DriverManager.getConnection(connectionUrl);
     }
 
-	/**
-	 * Get OTP code sent to a particular phone number in Database
-	 * @param number: phone number
-	 * @param typeOfOTP: either activate or reset
-	 * Example usage: String opt_code = obj.getOTPCode("+500:8942531099", "activate")
-	 */
-    public String getOTPCode(String number, String typeOfOTP) throws SQLException {
-        Connection connection = new InitConnection().createConnection();
-        String query = "select * from \"gateway-services\".jhi_user ju where login = '%s'".formatted(number);
-        ResultSet resultSet = connection.prepareStatement(query).executeQuery();
-        String OTP_CODE = null;
+    public String getActivationKey(String phoneNumber) throws SQLException {
+        String query = "select * from \"gateway-services\".jhi_user ju where login = '%s'".formatted(phoneNumber);
+        ResultSet resultSet = createConnection().prepareStatement(query).executeQuery();
+        String key = null;
         while (resultSet.next()) {
-            OTP_CODE = resultSet.getString("activation_key");
+        	key = resultSet.getString("activation_key");
         }
-        return OTP_CODE;
+        logger.debug("Phone number to get activation key from: " + phoneNumber); 
+        logger.info("Activation key retrieved: " + key); 
+        return key;
+    }     
+    
+    public String getResetKey(String phoneNumber) throws SQLException {
+    	String query = "select * from \"gateway-services\".jhi_user ju where login = '%s'".formatted(phoneNumber);
+    	ResultSet resultSet = createConnection().prepareStatement(query).executeQuery();
+    	String key = null;
+    	while (resultSet.next()) {
+    		key = resultSet.getString("reset_key");
+    	}
+        logger.debug("Phone number to get reset key from: " + phoneNumber); 
+    	logger.info("Reset key retrieved: " + key); 
+    	return key;
     }     
     
     @Test
