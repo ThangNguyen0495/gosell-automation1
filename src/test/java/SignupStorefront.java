@@ -28,7 +28,7 @@ public class SignupStorefront extends BaseTest{
         Thread.sleep(2000);
     }
     
-    @Test
+//    @Test
     public void SignupWithEmail() throws SQLException, InterruptedException {
     	String username = "tienvan345";
     	
