@@ -12,7 +12,7 @@ import static utilities.account.AccountTest.*;
 
 public class InitConnection {
 	
-	final static Logger logger = LogManager.getLogger(SignupPage.class);
+	final static Logger logger = LogManager.getLogger(InitConnection.class);
 	
     public java.sql.Connection createConnection() throws SQLException {
         String connectionUrl = "jdbc:postgresql://%s:%s/%s?user=%s&password=%s&loginTimeout=30".formatted(DB_HOST, DB_PORT, DB_DATABASE, DB_USER, DB_PASS);
