@@ -2,6 +2,7 @@ package pages.dashboard;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -33,6 +34,9 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
+    @FindBy (css = "div.uik-select__valueRenderedWrapper")
+    WebElement COUNTRY_DROPDOWN;    
+    
     @FindBy(css = "input[name='username']")
     WebElement USERNAME;
 
@@ -84,6 +88,13 @@ public class LoginPage {
         return this;
     }
 
+    public LoginPage selectCountry(String country) {
+    	commonAction.clickElement(COUNTRY_DROPDOWN);
+    	driver.findElement(By.xpath("//*[@class='uik-select__optionList']//div[@class='phone-option']/div[text()='%s']".formatted(country))).click();
+    	logger.info("Selected country: " + country);
+    	return this;
+    }    
+    
     public LoginPage switchToStaffTab() {
     	commonAction.clickElement(STAFF_TAB);
     	logger.info("Switched to Staff Tab.");
@@ -158,7 +169,7 @@ public class LoginPage {
     }
     
     public LoginPage performLogin(String country, String username, String password) {
-    	new SignupPage(driver).selectCountry(country);
+    	selectCountry(country);
     	inputEmailOrPhoneNumber(username);
     	inputPassword(password);
     	clickLoginBtn();
