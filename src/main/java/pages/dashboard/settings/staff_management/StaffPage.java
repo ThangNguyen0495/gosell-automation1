@@ -6,7 +6,6 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.dashboard.home.HomePage;
-import utilities.role_matrix.RoleMatrix;
 import utilities.screenshot.Screenshot;
 
 import java.io.IOException;
@@ -16,11 +15,9 @@ import static java.lang.Thread.sleep;
 import static utilities.links.Links.SETTING_PAGE_TITLE;
 
 public class StaffPage extends StaffVerify {
-
     Logger logger = LogManager.getLogger(StaffPage.class);
     public static String staffMail;
     static boolean isNull = false;
-
 
     public StaffPage(WebDriver driver) {
         super(driver);
@@ -31,12 +28,28 @@ public class StaffPage extends StaffVerify {
         return this;
     }
 
-    public String getFileName() {
-        return fileName;
+    public StaffPage setStaffSheetID(int sheetID) {
+        StaffVerify.staffSheetID = sheetID;
+        return this;
+    }
+
+    public StaffPage setDomainSheetID(int sheetID) {
+        StaffVerify.domainSheetID = sheetID;
+        return this;
+    }
+
+    public StaffPage setLanguage(String language) {
+        StaffVerify.language = language;
+        return this;
+    }
+
+    public StaffPage setEnv(String env) {
+        StaffVerify.env = env;
+        return this;
     }
 
     public StaffPage navigate() throws InterruptedException {
-        new HomePage(driver).navigateToSettingsPage();
+        new HomePage(driver).selectLanguage(language).navigateToSettingsPage();
         logger.info("Access to Setting page");
         wait.until(ExpectedConditions.titleIs(SETTING_PAGE_TITLE));
         logger.info("Title of Setting page is %s".formatted(driver.getTitle()));
@@ -101,16 +114,14 @@ public class StaffPage extends StaffVerify {
     public StaffPage selectStaffPermission(List<Integer> roleList) throws IOException {
         for (Integer role : roleList) {
             if ((role < STAFF_PERMISSIONS_LABEL.size())) {
-                System.out.println(STAFF_PERMISSIONS_LABEL.size());
                 if ((role == 12) || (role == 13)) {
                     if (!STAFF_PERMISSIONS_CHECKBOX.get(0).isSelected()) {
                         STAFF_PERMISSIONS_LABEL.get(0).click();
-                        logger.info("Add %s role to new staff".formatted(new RoleMatrix().permissionText(getFileName()).get(0)));
+                        logger.info("Add %s role to new staff".formatted(getRoleText().get(0)));
                     }
                 }
                 wait.until(ExpectedConditions.elementToBeClickable(STAFF_PERMISSIONS_LABEL.get(role))).click();
-                logger.info("Add %s role to new staff".formatted(new RoleMatrix().permissionText(getFileName()).get(role)));
-
+                logger.info("Add %s role to new staff".formatted(getRoleText().get(role)));
             }
         }
         return this;

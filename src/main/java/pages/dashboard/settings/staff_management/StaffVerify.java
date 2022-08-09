@@ -14,19 +14,21 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.Thread.sleep;
-import static utilities.links.Links.DOMAIN;
 
 public class StaffVerify extends StaffElement {
     WebDriverWait wait;
     AssertCustomize assertCustomize;
-
-    Logger logger = LogManager.getLogger(StaffVerify.class);
-
     static int countFail = 0;
     static String fileName;
-
+    static int staffSheetID;
+    static int domainSheetID;
+    static String language;
+    static String env;
+    Logger logger = LogManager.getLogger(StaffVerify.class);
+    RoleMatrix matrix = new RoleMatrix();
 
     public StaffVerify(WebDriver driver) {
         super(driver);
@@ -34,24 +36,56 @@ public class StaffVerify extends StaffElement {
         assertCustomize = new AssertCustomize(driver);
     }
 
+    public String getDomainURL() throws IOException {
+        return matrix.getDomain(fileName, domainSheetID, env).get(0);
+    }
+
+    public String getDomainTitle() throws IOException {
+        return matrix.getDomain(fileName, domainSheetID, env).get(1);
+    }
+
+    public Map<Integer, String> getPagePath() throws IOException {
+        return matrix.pagePath(fileName, staffSheetID);
+    }
+
+    public Map<Integer, List<Integer>> getPermissions() throws IOException {
+        return matrix.staffPermissions(fileName, staffSheetID);
+    }
+
+    public Map<Integer, String> getPageTitle() throws IOException {
+        if (language.equals("VIE")) {
+            return matrix.pageTitleVI(fileName, staffSheetID);
+        } else {
+            return matrix.pageTitleEN(fileName, staffSheetID);
+        }
+    }
+
+    public Map<Integer, String> getRoleText() throws IOException {
+        if (language.equals("VIE")) {
+            return matrix.permissionTextVI(fileName, staffSheetID);
+        } else {
+            return matrix.permissionTextEN(fileName, staffSheetID);
+        }
+    }
+
     public void checkNoPermission(int pageId) throws InterruptedException, IOException {
-        driver.get(DOMAIN + new RoleMatrix().pagePath().get(pageId));
-        logger.info("Access to %s page".formatted(new RoleMatrix().pageList().get(pageId)));
+        driver.get(getDomainURL() + getPagePath().get(pageId));
+        logger.info("Access to %s page".formatted(getDomainTitle() + getPageTitle().get(pageId)));
         sleep(1000);
         countFail = assertCustomize.assertEquals(countFail, driver.getCurrentUrl(),
-                DOMAIN + "/404", "[URL] 404 page is not displayed.");
-        logger.info("Verify that 404 page should be shown instead of %s".formatted(new RoleMatrix().pageList().get(pageId)));
+                getDomainURL() + "/404", "[URL] 404 page is not displayed.");
+        logger.info("Verify that 404 page should be shown instead of %s".formatted(getDomainTitle() + getPageTitle().get(pageId)));
     }
 
     public void checkPermission(int pageId) throws InterruptedException, IOException {
-        String path = new RoleMatrix().pagePath().get(pageId);
-        String title = new RoleMatrix().pageList().get(pageId);
-        driver.get(DOMAIN + path);
+        String path = getPagePath().get(pageId);
+        String title = getDomainTitle() + getPageTitle().get(pageId);
+        driver.get(getDomainURL() + path);
         logger.info("Access to %s page".formatted(title));
         sleep(1000);
         countFail = assertCustomize.assertEquals(countFail, driver.getCurrentUrl().replace("/intro", ""),
-                DOMAIN + path.replace("/intro", ""), "[URL] %s page is not displayed.".formatted(title));
-        logger.info(("Verify that current URL is: %s").formatted(DOMAIN + path));
+                getDomainURL() + path.replace("/intro", ""), "[URL] %s page is not displayed.".formatted(title));
+        logger.info(("Verify that current URL is: %s").formatted(getDomainURL() + path));
         countFail = assertCustomize.assertEquals(countFail, driver.getTitle(), title, "[Title] %s title does not match.".formatted(title));
         logger.info("Verify that page should be %s".formatted(title));
     }
@@ -68,12 +102,12 @@ public class StaffVerify extends StaffElement {
 
     public List<Integer> mixRoleList(List<Integer> roleList) throws IOException {
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < new RoleMatrix().staffPermissions(new StaffPage(driver).getFileName()).get(0).size(); i++) {
+        for (int i = 0; i < getPermissions().get(0).size(); i++) {
             list.add(0);
         }
         for (int role : roleList) {
             for (int i = 0; i < list.size(); i++) {
-                list.set(i, list.get(i) + new RoleMatrix().staffPermissions(new StaffPage(driver).getFileName()).get(role).get(i));
+                list.set(i, list.get(i) + getPermissions().get(role).get(i));
             }
         }
         return list;
@@ -119,9 +153,9 @@ public class StaffVerify extends StaffElement {
         return this;
     }
 
-    public void logout() throws InterruptedException {
+    public void logout() throws InterruptedException, IOException {
         if (driver.getCurrentUrl().contains("404")) {
-            driver.get(DOMAIN);
+            driver.get(getDomainURL());
             sleep(3000);
         }
         ((JavascriptExecutor) driver).executeScript("arguments[0].click()", LOGOUT_BTN);
