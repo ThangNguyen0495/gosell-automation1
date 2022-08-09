@@ -156,7 +156,7 @@ public class SignupPage {
     
     public SignupPage inputStoreMail(String mail) {
     	commonAction.inputText(STORE_MAIL, mail);
-    	logger.info("Input '" + mail + "' into Phone field.");
+    	logger.info("Input '" + mail + "' into Mail field.");
     	return this;
     }
     
@@ -240,18 +240,6 @@ public class SignupPage {
     	inputPassword(password);
     	clickSignupBtn();
         return this;
-    }    
-    
-    public String getOTPCode(String userLoginDB) throws SQLException {
-        Connection connection = new InitConnection().createConnection();
-        String query = "select * from \"gateway-services\".jhi_user ju where login = '%s'".formatted(userLoginDB);
-        ResultSet resultSet = connection.prepareStatement(query).executeQuery();
-        String OTP_CODE = null;
-        while (resultSet.next()) {
-            OTP_CODE = resultSet.getString("activation_key");
-        }
-        logger.info("OTP Code retrieved: " + OTP_CODE); 
-        return OTP_CODE;
     }    
     
     public SignupPage inputVerificationCode(String verificationCode) throws SQLException {

@@ -141,18 +141,6 @@ public class SignupPage {
         return this;
     }        
     
-    public String getOTPCode(String userLoginDB) throws SQLException {
-        Connection connection = new InitConnection().createConnection();
-        String query = "select * from \"gateway-services\".jhi_user ju where login = '%s'".formatted(userLoginDB);
-        ResultSet resultSet = connection.prepareStatement(query).executeQuery();
-        String OTP_CODE = null;
-        while (resultSet.next()) {
-            OTP_CODE = resultSet.getString("activation_key");
-        }
-        logger.info("OTP Code retrieved: " + OTP_CODE);
-        return OTP_CODE;
-    }    
-    
     public SignupPage inputVerificationCode(String verificationCode) throws SQLException {
     	commonAction.inputText(OTP, verificationCode);
     	logger.info("Input '" + verificationCode + "' into Verification Code field.");
