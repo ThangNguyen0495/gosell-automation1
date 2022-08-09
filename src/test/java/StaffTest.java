@@ -1,6 +1,5 @@
 import org.testng.annotations.Test;
 import pages.dashboard.LoginPage;
-import pages.dashboard.home.HomePage;
 import pages.dashboard.settings.staff_management.StaffPage;
 import pages.dashboard.settings.staff_management.StaffVerify;
 import utilities.mail.MailPage;
@@ -9,7 +8,6 @@ import utilities.role_matrix.RoleMatrix;
 import java.io.IOException;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
 import static pages.dashboard.settings.staff_management.StaffPage.staffMail;
 
 public class StaffTest extends BaseTest {
