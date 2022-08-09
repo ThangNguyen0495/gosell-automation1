@@ -126,27 +126,53 @@ public class UICommonAction {
 		JavascriptExecutor jsExecutor =(JavascriptExecutor) driver;
 		jsExecutor.executeScript("arguments[0].setAttribute('value', '" + value + "')", element);
 	}
-	public void waitForElementInvisible( WebElement element){
-		wait= new WebDriverWait(driver,Duration.ofSeconds(30));
-		wait.until(ExpectedConditions.invisibilityOf(element));
+	public void waitForElementInvisible(WebElement element){
+		try {
+			wait.until(ExpectedConditions.invisibilityOf(element));
+		} catch (StaleElementReferenceException ex) {
+			logger.debug("Catch StaleElementReferenceException caught in waitForElementInvisible");
+			wait.until(ExpectedConditions.invisibilityOf(element));
+		}
 	}
-	public void waitForElementVisible( WebElement element){
-		wait= new WebDriverWait(driver,Duration.ofSeconds(30));
-		wait.until(ExpectedConditions.visibilityOf(element));
+	public void waitForElementVisible(WebElement element){
+		try {
+			wait.until(ExpectedConditions.visibilityOf(element));
+		} catch (StaleElementReferenceException ex) {
+			logger.debug("Catch StaleElementReferenceException caught in waitForElementVisible");
+			wait.until(ExpectedConditions.visibilityOf(element));
+		}
 	}
+	public void waitForElementInvisible(WebElement element, int timeout){
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		try {
+			wait.until(ExpectedConditions.invisibilityOf(element));
+		} catch (StaleElementReferenceException ex) {
+			logger.debug("Catch StaleElementReferenceException caught in waitForElementInvisible");
+			wait.until(ExpectedConditions.invisibilityOf(element));
+		}
+	}
+	public void waitForElementVisible(WebElement element, int timeout){
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		try {
+			wait.until(ExpectedConditions.visibilityOf(element));
+		} catch (StaleElementReferenceException ex) {
+			logger.debug("Catch StaleElementReferenceException caught in waitForElementVisible");
+			wait.until(ExpectedConditions.visibilityOf(element));
+		}
+	}
+
 	public List<WebElement> getAllOptionInDropDown(WebElement element){
 		Select select = new Select(element);
 		return select.getOptions();
 	}
 
 	public void waitTillElementDisappear(WebElement element, int timeout) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		try {
-			wait.until(ExpectedConditions.visibilityOf(element));
+			waitForElementVisible(element, timeout);
 		} catch (TimeoutException ex) {
 			logger.debug("Timeout waiting for element to disappear: " + ex);
 		}
-	    wait.until(ExpectedConditions.invisibilityOf(element));
+		waitForElementInvisible(element, timeout);
 	}
 	public boolean isElementNotDisplay(List<WebElement> elements){
 		if(elements.size()==0) {
