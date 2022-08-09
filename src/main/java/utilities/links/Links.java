@@ -14,4 +14,5 @@ public class Links {
 
     public static String SIGNUP_PATH = "/wizard/1";
     public static String SIGNUP_PATH1 = "/wizard/1";
+    public static String INTERNAL_TOOL = "http://internal.beecow.info/";
 }
