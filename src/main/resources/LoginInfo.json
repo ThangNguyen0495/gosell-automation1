@@ -7,8 +7,10 @@
         "password" : "fortesting!1"
       },
       "phone" : {
-        "username" : "0363530754",
-        "password" : "Abc@12345"
+        "username" : "9123456084",
+        "password" : "fortesting!1",
+        "country" : "United Kingdom",
+        "countryCode" : "+44"
       },
       "facebook" : {
         "username" : "trangthuy9662@gmail.com",

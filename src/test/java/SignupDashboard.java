@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 import pages.dashboard.LoginPage;
 import pages.dashboard.SignupPage;
 import pages.dashboard.home.HomePage;
+import utilities.database.InitConnection;
 import pages.Mailnesia;
 
 import java.sql.SQLException;
@@ -11,6 +12,16 @@ import java.sql.SQLException;
 public class SignupDashboard extends BaseTest{
 
 	SignupPage signupPage;
+
+    public String getVerificationCode(String username) {
+    	// Get verification code from Mailnesia
+    	commonAction.openNewTab();
+    	commonAction.switchToWindow(1);
+    	String verificationCode = new Mailnesia(driver).navigate(username).getVerificationCode();
+    	commonAction.closeTab();
+    	commonAction.switchToWindow(0);    	
+    	return verificationCode;
+    }			
 	
     @BeforeMethod
     public void setup() throws InterruptedException {
@@ -18,11 +29,10 @@ public class SignupDashboard extends BaseTest{
     	signupPage = new SignupPage(driver);
     }		
 	
-    @Test
+//    @Test
     public void SignupWithPhoneThenCreateForeignShop() throws SQLException, InterruptedException {
 
     	String randomNumber = generate.generateNumber(3);
-    	
     	String username = "automation0-shop" + randomNumber + "@mailnesia.com";
     	String password = "fortesting!1";
     	String country = "United Kingdom";
@@ -37,23 +47,25 @@ public class SignupDashboard extends BaseTest{
     	String state = "England";
     	String zipCode = "987654";    	
     	
+    	// Sign up
     	signupPage.navigate()
         .fillOutSignupForm(country, storePhone, password)
-        .inputVerificationCode(signupPage.getOTPCode(countryCode + ":" + storePhone));
+        .inputVerificationCode(new InitConnection().getActivationKey(countryCode + ":" + storePhone))
+    	.clickConfirmBtn();
     	
     	//Setup store
-    	signupPage.clickConfirmBtn();
-    	signupPage.inputStoreName(storeName);
-    	signupPage.selectCountryToSetUpShop(country);
-    	signupPage.selectCurrency(currency);
-    	signupPage.selectLanguage(language);
-    	signupPage.inputStoreMail(username);
-    	signupPage.inputPickupAddress(pickupAddress);
-    	signupPage.inputSecondPickupAddress(secondPickupAddress);
-    	signupPage.inputCity(city);
-    	signupPage.selectCityCode(state);
-    	signupPage.inputZipCode(zipCode);
-    	signupPage.clickCompleteBtn();
+    	signupPage.inputStoreName(storeName)
+    	.selectCountryToSetUpShop(country)
+    	.selectCurrency(currency)
+    	.selectLanguage(language)
+    	.inputStoreMail(username)
+    	.inputPickupAddress(pickupAddress)
+    	.inputSecondPickupAddress(secondPickupAddress)
+    	.inputCity(city)
+    	.selectCityCode(state)
+    	.inputZipCode(zipCode)
+    	.clickCompleteBtn();
+    	
     	signupPage.clickLogout();
     	
     	// Re-login to the shop
@@ -63,12 +75,10 @@ public class SignupDashboard extends BaseTest{
     	new HomePage(driver).waitTillSpinnerDisappear().clickLogout();    	
     }
     
-    
     @Test
     public void SignupWithPhoneThenCreateVNShop() throws SQLException, InterruptedException {
     	
     	String randomNumber = generate.generateNumber(3);
-    	
     	String username = "automation0-shop" + randomNumber + "@mailnesia.com";
     	String password = "fortesting!1";
     	String country = "Vietnam";
@@ -82,23 +92,24 @@ public class SignupDashboard extends BaseTest{
     	String district = "Quận 8";
     	String ward = "Phường 2";   	
     	
+    	//Sign up
     	signupPage.navigate()
     	.fillOutSignupForm(country, storePhone, password)
-    	.inputVerificationCode(signupPage.getOTPCode(countryCode + ":" + storePhone));
+    	.inputVerificationCode(new InitConnection().getActivationKey(countryCode + ":" + storePhone))
+    	.clickConfirmBtn();
     	
     	//Setup store
-    	signupPage.clickConfirmBtn();
-    	signupPage.inputStoreName(storeName);
-    	signupPage.selectCountryToSetUpShop(country);
-    	signupPage.selectCurrency(currency);
-    	signupPage.selectLanguage(language);
-    	signupPage.inputStoreMail(username);
-    	signupPage.inputPickupAddress(pickupAddress);
-    	signupPage.selectCityCode(city);
-    	signupPage.selectDistrict(district);
-    	signupPage.selectWard(ward);
-    	signupPage.clickCompleteBtn();
-    	signupPage.clickLogout();
+    	signupPage.inputStoreName(storeName)
+    	.selectCountryToSetUpShop(country)
+    	.selectCurrency(currency)
+    	.selectLanguage(language)
+    	.inputStoreMail(username)
+    	.inputPickupAddress(pickupAddress)
+    	.selectCityCode(city)
+    	.selectDistrict(district)
+    	.selectWard(ward)
+    	.clickCompleteBtn()
+    	.clickLogout();
     	
     	// Re-login to the shop
     	new LoginPage(driver).navigate().performLogin(country, storePhone, password);
@@ -107,11 +118,10 @@ public class SignupDashboard extends BaseTest{
     	new HomePage(driver).waitTillSpinnerDisappear().clickLogout();    	
     }
     
-    @Test
+//    @Test
     public void SignupWithEmailThenCreateForeignShop() throws SQLException, InterruptedException {
     	
     	String randomNumber = generate.generateNumber(3);
-    	
     	String username = "automation0-shop" + randomNumber + "@mailnesia.com";
     	String password = "fortesting!1";
     	String country = "United Kingdom";
@@ -126,32 +136,25 @@ public class SignupDashboard extends BaseTest{
     	String state = "England";
     	String zipCode = "987654";
     	
-    	
-    	signupPage.navigate();
-    	signupPage.fillOutSignupForm(country, username, password);
+    	// Sign up
+    	signupPage.navigate().fillOutSignupForm(country, username, password);
     	Thread.sleep(7000);
-    	
-    	// Get verification code from Mailnesia
-    	commonAction.openNewTab();
-    	commonAction.switchToWindow(1);
-    	String verificationCode = new Mailnesia(driver).navigate(username).getVerificationCode();
-    	commonAction.closeTab();
-    	commonAction.switchToWindow(0);
+    	signupPage.inputVerificationCode(getVerificationCode(username))
+    	.clickConfirmBtn();
     	
     	//Setup store
-    	signupPage.inputVerificationCode(verificationCode);
-    	signupPage.clickConfirmBtn();
-    	signupPage.inputStoreName(storeName);
-    	signupPage.selectCountryToSetUpShop(country);
-    	signupPage.selectCurrency(currency);
-    	signupPage.selectLanguage(language);
-    	signupPage.inputStorePhone(storePhone);
-    	signupPage.inputPickupAddress(pickupAddress);
-    	signupPage.inputSecondPickupAddress(secondPickupAddress);
-    	signupPage.inputCity(city);
-    	signupPage.selectCityCode(state);
-    	signupPage.inputZipCode(zipCode);
-    	signupPage.clickCompleteBtn();
+    	signupPage.inputStoreName(storeName)
+    	.selectCountryToSetUpShop(country)
+    	.selectCurrency(currency)
+    	.selectLanguage(language)
+    	.inputStorePhone(storePhone)
+    	.inputPickupAddress(pickupAddress)
+    	.inputSecondPickupAddress(secondPickupAddress)
+    	.inputCity(city)
+    	.selectCityCode(state)
+    	.inputZipCode(zipCode)
+    	.clickCompleteBtn();
+    	
     	signupPage.clickLogout();
     	
     	// Re-login to the shop
@@ -159,14 +162,12 @@ public class SignupDashboard extends BaseTest{
     	new HomePage(driver).clickUpgradeNow();
     	Thread.sleep(1000);
     	new HomePage(driver).waitTillSpinnerDisappear().clickLogout();
-    	
     }
     
-    @Test
+//    @Test
     public void SignupWithEmailThenCreateVNShop() throws SQLException, InterruptedException {
     	
     	String randomNumber = generate.generateNumber(3);
-    	
     	String username = "automation0-shop" + randomNumber + "@mailnesia.com";
     	String password = "fortesting!1";
     	String country = "Vietnam";
@@ -180,31 +181,24 @@ public class SignupDashboard extends BaseTest{
     	String district = "Quận 8";
     	String ward = "Phường 2";
     	
-    	
-    	signupPage.navigate();
-    	signupPage.fillOutSignupForm(country, username, password);
+    	// Sign up
+    	signupPage.navigate().fillOutSignupForm(country, username, password);
     	Thread.sleep(7000);
-    	
-    	// Get verification code from Mailnesia
-    	commonAction.openNewTab();
-    	commonAction.switchToWindow(1);
-    	String verificationCode = new Mailnesia(driver).navigate(username).getVerificationCode();
-    	commonAction.closeTab();
-    	commonAction.switchToWindow(0);
+    	signupPage.inputVerificationCode(getVerificationCode(username))
+    	.clickConfirmBtn();
     	
     	//Setup store
-    	signupPage.inputVerificationCode(verificationCode);
-    	signupPage.clickConfirmBtn();
-    	signupPage.inputStoreName(storeName);
-    	signupPage.selectCountryToSetUpShop(country);
-    	signupPage.selectCurrency(currency);
-    	signupPage.selectLanguage(language);
-    	signupPage.inputStorePhone(storePhone);
-    	signupPage.inputPickupAddress(pickupAddress);
-    	signupPage.selectCityCode(city);
-    	signupPage.selectDistrict(district);
-    	signupPage.selectWard(ward);
-    	signupPage.clickCompleteBtn();
+    	signupPage.inputStoreName(storeName)
+    	.selectCountryToSetUpShop(country)
+    	.selectCurrency(currency)
+    	.selectLanguage(language)
+    	.inputStorePhone(storePhone)
+    	.inputPickupAddress(pickupAddress)
+    	.selectCityCode(city)
+    	.selectDistrict(district)
+    	.selectWard(ward)
+    	.clickCompleteBtn();
+    	
     	signupPage.clickLogout();
     	
     	// Re-login to the shop
@@ -212,7 +206,6 @@ public class SignupDashboard extends BaseTest{
     	new HomePage(driver).clickUpgradeNow();
     	Thread.sleep(1000);
     	new HomePage(driver).waitTillSpinnerDisappear().clickLogout();
-    	
     }
     
 }

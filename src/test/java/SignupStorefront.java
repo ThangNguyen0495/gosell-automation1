@@ -2,6 +2,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import pages.storefront.SignupPage;
+import utilities.database.InitConnection;
 import pages.Mailnesia;
 
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ public class SignupStorefront extends BaseTest{
     	
     	signupPage.navigate()
     			.fillOutSignupForm("Andorra", phone, "Abc@12345", "Luke Thames", "02/02/1990")
-                .inputVerificationCode(signupPage.getOTPCode("+376:" + phone));
+                .inputVerificationCode(new InitConnection().getActivationKey("+376:" + phone));
 //                .clickConfirmBtn();
         Thread.sleep(2000);
     }
