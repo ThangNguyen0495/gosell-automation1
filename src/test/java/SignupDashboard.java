@@ -29,8 +29,8 @@ public class SignupDashboard extends BaseTest{
     	signupPage = new SignupPage(driver);
     }		
 	
-//    @Test
-    public void SignupWithPhoneThenCreateForeignShop() throws SQLException, InterruptedException {
+    @Test
+    public void SignUpForForeignShopWithPhone() throws SQLException, InterruptedException {
 
     	String randomNumber = generate.generateNumber(3);
     	String username = "automation0-shop" + randomNumber + "@mailnesia.com";
@@ -76,7 +76,7 @@ public class SignupDashboard extends BaseTest{
     }
     
     @Test
-    public void SignupWithPhoneThenCreateVNShop() throws SQLException, InterruptedException {
+    public void SignUpForVNShopWithPhone() throws SQLException, InterruptedException {
     	
     	String randomNumber = generate.generateNumber(3);
     	String username = "automation0-shop" + randomNumber + "@mailnesia.com";
@@ -118,8 +118,8 @@ public class SignupDashboard extends BaseTest{
     	new HomePage(driver).waitTillSpinnerDisappear().clickLogout();    	
     }
     
-//    @Test
-    public void SignupWithEmailThenCreateForeignShop() throws SQLException, InterruptedException {
+    @Test
+    public void SignUpForForeignShopWithEmail() throws SQLException, InterruptedException {
     	
     	String randomNumber = generate.generateNumber(3);
     	String username = "automation0-shop" + randomNumber + "@mailnesia.com";
@@ -164,8 +164,8 @@ public class SignupDashboard extends BaseTest{
     	new HomePage(driver).waitTillSpinnerDisappear().clickLogout();
     }
     
-//    @Test
-    public void SignupWithEmailThenCreateVNShop() throws SQLException, InterruptedException {
+    @Test
+    public void SignUpForVNShopWithEmail() throws SQLException, InterruptedException {
     	
     	String randomNumber = generate.generateNumber(3);
     	String username = "automation0-shop" + randomNumber + "@mailnesia.com";
