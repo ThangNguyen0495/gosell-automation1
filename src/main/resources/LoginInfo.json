@@ -37,7 +37,9 @@
       },
       "phone" : {
         "username" : "0856256079",
-        "password" : "12345678x@X"
+        "password" : "12345678x@X",
+        "country" : "Vietnam",
+        "countryCode" : "+84"
       }
     },
     "emptyUsernameError" : "Hãy nhập số điện thoại hoặc email",
