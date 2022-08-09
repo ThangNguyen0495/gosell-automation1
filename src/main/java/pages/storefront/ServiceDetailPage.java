@@ -159,6 +159,7 @@ public class ServiceDetailPage {
         }else {
             Assert.assertEquals(SEOKeywordActual,SEOKeyword);
         }
+        logger.info("Verify SEO info");
         return this;
     }
     public void clickOnCollectionLink(){
