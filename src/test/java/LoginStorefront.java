@@ -1,3 +1,5 @@
+import java.sql.SQLException;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -7,6 +9,7 @@ import pages.Mailnesia;
 import pages.storefront.HeaderSF;
 import pages.storefront.LoginPage;
 import utilities.jsonFileUtility;
+import utilities.database.InitConnection;
 
 public class LoginStorefront extends BaseTest {
 
@@ -37,7 +40,7 @@ public class LoginStorefront extends BaseTest {
 		INVALID_CREDENTIALS_ERROR = data.findValue("invalidCredentials").asText();
 	}
 
-//	@Test
+	@Test
 	public void TC01_SF_LoginWithAllFieldsLeftBlank() {
 		new LoginPage(driver).navigate()
 		.performLogin("", generate.generateNumber(9))
@@ -56,7 +59,7 @@ public class LoginStorefront extends BaseTest {
 		.completeVerify();
 	}
 
-//    @Test
+    @Test
     public void TC02_SF_LoginWithInvalidPhoneFormat() {
     	// Log in with a phone number consisting of 7 digits.
         new LoginPage(driver).navigate()
@@ -70,7 +73,7 @@ public class LoginStorefront extends BaseTest {
                 .completeVerify();
     }	
 
-//    @Test
+    @Test
     public void TC03_SF_LoginWithInvalidMailFormat() {
         new LoginPage(driver).navigate()
                 .performLogin(generate.generateString(10), generate.generateString(10))
@@ -78,7 +81,7 @@ public class LoginStorefront extends BaseTest {
                 .completeVerify();
     }    
  
-//    @Test
+    @Test
     public void TC04_SF_LoginWithWrongEmailAccount() {
         new LoginPage(driver).navigate()
                 .performLogin(generate.generateString(10) + "@nbobd.com", generate.generateString(10))
@@ -86,7 +89,7 @@ public class LoginStorefront extends BaseTest {
                 .completeVerify();
     }    
 
-//    @Test
+    @Test
     public void TC05_SF_LoginWithWrongPhoneAccount() {
         new LoginPage(driver).navigate()
                 .performLogin(generate.generateNumber(13), generate.generateString(10))
@@ -94,7 +97,7 @@ public class LoginStorefront extends BaseTest {
                 .completeVerify();
     }    
 
-//    @Test
+    @Test
     public void TC06_SF_LoginWithCorrectPhoneAccount() throws InterruptedException {
         new LoginPage(driver).navigate()
                 .performLogin(PHONE_COUNTRY, PHONE, PHONE_PASSWORD);
@@ -103,7 +106,7 @@ public class LoginStorefront extends BaseTest {
         new HeaderSF(driver).clickLogout();
     }    
 
-//    @Test
+    @Test
     public void TC07_SF_LoginWithCorrectMailAccount() throws InterruptedException {
         new LoginPage(driver).navigate()
                 .performLogin(MAIL, PASSWORD);
@@ -148,28 +151,21 @@ public class LoginStorefront extends BaseTest {
   }
   
   //Don't run this test case. It should only be run in regression test.
-  @Test
-  public void TC09_SF_ForgotPhonePassword() throws InterruptedException {
+//  @Test
+  public void TC09_SF_ForgotPhonePassword() throws InterruptedException, SQLException {
 	  String newPassword = PHONE_PASSWORD + "@" + generate.generateNumber(3);
 	  
 	  new LoginPage(driver).navigate()
 	  .clickUserInfoIcon()
 	  .clickLoginIcon()
 	  .clickForgotPassword()
-	  .selectCountry(PHONE_COUNTRY)
+	  .selectCountryForgot(PHONE_COUNTRY)
 	  .inputUsernameForgot(PHONE)
 	  .clickContinueBtn()
 	  .inputPasswordForgot(newPassword);
 	  
 	  // Get verification code from Mailnesia
-	  Thread.sleep(7000);
-	  commonAction.openNewTab();
-	  commonAction.switchToWindow(1);
-	  String verificationCode = new Mailnesia(driver).navigate(MAIL).getVerificationCode();
-	  commonAction.closeTab();
-	  commonAction.switchToWindow(0);
-	  
-	  new LoginPage(driver).inputVerificationCode(verificationCode)
+	  new LoginPage(driver).inputVerificationCode(new InitConnection().getResetKey(PHONE_COUNTRYCODE + ":" + PHONE))
 	  .clickConfirmBtn();
 	  Thread.sleep(1000);
 	  new LoginPage(driver).clickUserInfoIcon();
@@ -177,7 +173,7 @@ public class LoginStorefront extends BaseTest {
 	  
 	  // Re-login with new password
 	  new LoginPage(driver).navigate()
-	  .performLogin(MAIL, newPassword);
+	  .performLogin(PHONE, newPassword);
 	  Thread.sleep(1000);
 	  new LoginPage(driver).clickUserInfoIcon();
 	  new HeaderSF(driver).clickLogout();

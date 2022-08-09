@@ -43,6 +43,9 @@ public class LoginPage {
     @FindBy (id = "login-country-code")
     WebElement COUNTRY_DROPDOWN;       
     
+    @FindBy (id = "forgot-pwd-country-code")
+    WebElement COUNTRY_FORGOT_DROPDOWN;       
+    
     @FindBy(id = "login-username")
     WebElement USERNAME;
     
@@ -105,6 +108,13 @@ public class LoginPage {
     public LoginPage selectCountry(String country) {
     	commonAction.clickElement(COUNTRY_DROPDOWN);
     	driver.findElement(By.xpath("//ul[@id='login-country-code-menu']//a[@class='dropdown-item']/span[text()='%s']".formatted(country))).click();
+    	logger.info("Selected country: " + country);
+    	return this;
+    }        
+    
+    public LoginPage selectCountryForgot(String country) {
+    	commonAction.clickElement(COUNTRY_FORGOT_DROPDOWN);
+    	driver.findElement(By.xpath("//ul[@id='forgot-pwd-country-code-menu']//a[@class='dropdown-item']/span[text()='%s']".formatted(country))).click();
     	logger.info("Selected country: " + country);
     	return this;
     }        
