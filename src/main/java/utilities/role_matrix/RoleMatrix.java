@@ -1,59 +1,41 @@
 package utilities.role_matrix;
 
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import utilities.excel.Excel;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class RoleMatrix {
-    /**
-     * <p> Staff Role Matrix Table </p>
-     * <p> column 1: staff role id </p>
-     * <p> column 2 -> 54: permit access to page (0: no permission, 1: have permission) </p>
-     */
-    public Map<Integer, List<Integer>> staffRoleEncode() {
-        Map<Integer, List<Integer>> staffRoleEncode = new HashMap<>();
-        staffRoleEncode.put(0, List.of(1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(1, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(2, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(3, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0));
-        staffRoleEncode.put(4, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(5, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1));
-        staffRoleEncode.put(6, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(7, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(8, List.of(1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(9, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(10, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(11, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(12, List.of(1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(13, List.of(1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        staffRoleEncode.put(14, List.of(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        return staffRoleEncode;
+
+    public Map<Integer, List<Integer>> staffPermissions(String fileName) throws IOException {
+        Map<Integer, List<Integer>> rolePage = new HashMap<>();
+        Sheet sheet = new Excel().getSheet(fileName, 0);
+        int maxRow = sheet.getLastRowNum();
+        int maxCell = sheet.getRow(0).getLastCellNum();
+        List<Integer> roleList;
+        for (int cellNum = 3; cellNum < maxCell; cellNum++) {
+            roleList = new ArrayList<>();
+            for (int rowNum = 1; rowNum <= maxRow; rowNum++) {
+                roleList.add(Integer.valueOf(new DataFormatter().formatCellValue(sheet.getRow(rowNum).getCell(cellNum))));
+            }
+            rolePage.put(cellNum - 3, roleList);
+        }
+        return rolePage;
     }
 
-    /**
-     * <p> Staff Role Title Table </p>
-     * <p> column 1: staff role id </p>
-     * <p> column 2: staff role title </p>
-     */
-
-    public Map<Integer, String> staffRoleText() {
-        Map<Integer, String> staffRoleText = new HashMap<>();
-        staffRoleText.put(0, "Products");
-        staffRoleText.put(1, "Marketing");
-        staffRoleText.put(2, "Orders");
-        staffRoleText.put(3, "Sales chanel");
-        staffRoleText.put(4, "Analytics");
-        staffRoleText.put(5, "Settings");
-        staffRoleText.put(6, "Discount");
-        staffRoleText.put(7, "Customers");
-        staffRoleText.put(8, "GoChat");
-        staffRoleText.put(9, "Services");
-        staffRoleText.put(10, "Call center");
-        staffRoleText.put(11, "Reservations");
-        staffRoleText.put(12, "Supplier management");
-        staffRoleText.put(13, "Purchase order");
-        staffRoleText.put(14, "Cashbook");
-        return staffRoleText;
+    public Map<Integer, String> permissionText(String fileName) throws IOException {
+        Map<Integer, String> permissionText = new HashMap<>();
+        Row row = new Excel().getSheet(fileName, 0).getRow(0);
+        for (int cellNum = 3; cellNum < row.getLastCellNum(); cellNum++) {
+            permissionText.put(cellNum - 3, new DataFormatter().formatCellValue(row.getCell(cellNum)));
+        }
+        return permissionText;
     }
 
     /**
