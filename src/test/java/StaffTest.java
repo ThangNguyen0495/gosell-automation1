@@ -14,12 +14,16 @@ public class StaffTest extends BaseTest {
     String fileName = "staffRoleMatrix.xlsx";
     String sellerAccount = "stgauto@nbobd.com";
     String sellerPassword = "Abc@12345";
+    String env = "stg";
+    String language = "VIE";
+    int domainSheetID = 0;
+    int staffSheetID = 1;
 
     @Test
     public void Tcs01_createStaff() throws InterruptedException, IOException {
-        for (int i = 12; i < 15; i++) {
+        for (int i = 0; i < 1; i++) {
             String staffName = "staff Test 2022/08/05_round4 %s".formatted(i);
-            String staffMail = "staff20220808r4%s@qa.team".formatted(i);
+            String staffMail = "staff20220809r4%s@qa.team".formatted(i);
             List<Integer> staffRole = List.of(i);
             List<Integer> staffBranch = List.of(0);
 
@@ -29,8 +33,12 @@ public class StaffTest extends BaseTest {
                     .clickLoginBtn();
 
             new StaffPage(driver).waitLoginPage()
-                    .navigate()
                     .setFileName(fileName)
+                    .setEnv(env)
+                    .setStaffSheetID(staffSheetID)
+                    .setDomainSheetID(domainSheetID)
+                    .setLanguage(language)
+                    .navigate()
                     .clickOnTheAddStaffBtn()
                     .inputStaffName(staffName)
                     .inputStaffMail(staffMail)
@@ -50,14 +58,14 @@ public class StaffTest extends BaseTest {
                     .verifyPermissionOfStaff(staffRole)
                     .logout();
 
-            System.out.printf("-----END OF ROLE : %s -----%n", new RoleMatrix().permissionText(fileName).get(i));
+            System.out.printf("-----END OF ROLE : %s -----%n", new RoleMatrix().permissionTextEN(fileName, 1).get(i));
         }
         new StaffVerify(driver).completeVerify();
     }
 
     @Test
     public void Tcs02_EditTest() throws IOException, InterruptedException {
-        for (int i = 12; i < 15; i++) {
+        for (int i = 0; i < 15; i++) {
             String staffName = "staff Test 2022/08/08_round4 %s".formatted(i);
             List<Integer> staffRole = List.of(i);
             List<Integer> staffBranch = List.of(0);
@@ -67,8 +75,12 @@ public class StaffTest extends BaseTest {
                     .clickLoginBtn();
 
             new StaffPage(driver).waitLoginPage()
-                    .navigate()
                     .setFileName(fileName)
+                    .setEnv(env)
+                    .setStaffSheetID(staffSheetID)
+                    .setDomainSheetID(domainSheetID)
+                    .setLanguage(language)
+                    .navigate()
                     .clickOnTheEditIcon()
                     .inputStaffName(staffName)
                     .deselectedAllStaffPermissions()
@@ -89,7 +101,7 @@ public class StaffTest extends BaseTest {
                     .verifyPermissionOfStaff(staffRole)
                     .logout();
 
-            System.out.printf("-----END OF ROLE : %s -----%n", new RoleMatrix().permissionText(fileName).get(i));
+            System.out.printf("-----END OF ROLE : %s -----%n", new RoleMatrix().permissionTextEN(fileName, 1).get(i));
 
         }
         new StaffVerify(driver).completeVerify();
